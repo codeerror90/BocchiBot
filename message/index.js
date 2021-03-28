@@ -1299,9 +1299,9 @@ if (autores. match ('robotina')){
                     await bocchi.reply(from, 'Error!', id)
                 }
             break
-            case 'tomp3': // by: Piyobot
+              case 'tomp3': // by: Piyobot
                 if (!isRegistered) return await bocchi.reply(from, eng.notRegistered(), id)
-                if ((isMedia && isVideo || isQuotedVideo)) {
+                if (isMedia && isVideo || isQuotedVideo) {
                     if (limit.isLimit(sender.id, _limit, limitCount, isPremium, isOwner)) return await bocchi.reply(from, eng.limit(), id)
                     limit.addLimit(sender.id, _limit, isPremium, isOwner)
                     await bocchi.reply(from, eng.wait(), id)
@@ -1334,6 +1334,24 @@ if (autores. match ('robotina')){
                     await bocchi.reply(from, eng.wrongFormat(), id)
                 }
             break
+            break
+		case 'toptt':
+                if (!isRegistered) return await bocchi.reply(from, eng.notRegistered(), id)
+                if (isMedia && isAudio || isQuotedAudio) {
+                    if (limit.isLimit(sender.id, _limit, limitCount, isPremium, isOwner)) return await bocchi.reply(from, eng.limit(), id)
+                    limit.addLimit(sender.id, _limit, isPremium, isOwner)
+                    await bocchi.reply(from, eng.wait(), id)
+                    const encryptMedia = isQuotedAudio ? quotedMsg : message
+                    const mediaData = await decryptMedia(encryptMedia, uaOverride)
+                    const name = new Date() * 1
+                    fs.writeFileSync(`./temp/audio/${name}.mp3`, mediaData)
+                    await bocchi.sendPtt(from, `./temp/audio/${name}.mp3`, id)
+                    fs.unlinkSync(`./temp/audio/${name}.mp3`)
+                } else {
+                    await bocchi.reply(from, eng.wrongFormat(), id)
+                }
+            break
+			
             case 'playstore':
             case 'ps':
                 if (!isRegistered) return await bocchi.reply(from, eng.notRegistered(), id)
@@ -2341,6 +2359,21 @@ if (autores. match ('robotina')){
                     await bocchi.reply(from, eng.wrongFormat(), id)
                 }
             break
+		case 'lolivid':  //Piyobot
+                if (!isRegistered) return await bocchi.reply(from, ind.notRegistered(), id)
+                if (limit.isLimit(sender.id, _limit, limitCount, isPremium, isOwner)) return await bocchi.reply(from, ind.limit(), id)
+                limit.addLimit(sender.id, _limit, isPremium, isOwner)
+                weeaboo.loli()
+                    .then(async (body) => {
+                        let lolipiyo = body.split('\n')
+                        let papololi = lolipiyo[Math.floor(Math.random() * lolipiyo.length)]
+                        await bocchi.sendFileFromUrl(from, papololi, 'loli.mp4', '', id)
+                    })
+                    .catch(async (err) => {
+                        console.error(err)
+                        await bocchi.reply(from, 'Error!', id)
+                    })
+            break	
             case 'waifu':
                 if (!isRegistered) return await bocchi.reply(from, eng.notRegistered(), id)
                 if (limit.isLimit(sender.id, _limit, limitCount, isPremium, isOwner)) return await bocchi.reply(from, eng.limit(), id)
