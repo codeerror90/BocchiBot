@@ -320,13 +320,50 @@ exports.limit = () => {
 
 exports.asmaulHusna = (assna) => {
     return `
-───❉ 𝐀𝐬𝐦𝐚𝐮𝐥 𝐇𝐮𝐬𝐧𝐚 ❉──
-
+*── 「 ASMAUL HUSNA 」 ──*
 *${assna.name}*
-❏ *Number*: ${assna.number}
-❏ *Transliteration*: ${assna.transliteration}
-❏ *English*: ${assna.en.meaning}
+❏ *Asmaul husna ke*: ${assna.number}
+❏ *Pelafalan*: ${assna.transliteration}
+❏ *Inggris*: ${assna.en.meaning}
     `
+}
+
+exports.stickerDel = () => {
+    return `El Sticker se eliminó correctamente de la base de datos.!`
+}
+
+exports.stickerAdd = () => {
+    return `El Sticker se agregó correctamente a la base de datos.!`
+}
+
+exports.stickerAddAlready = (q) => {
+    return `Pegatinas con palabras clave "${q}" ya existe en la base de datos!`
+}
+
+exports.stickerNotFound = () => {
+    return `Sticker no encontrado!`
+}
+
+exports.reminderOn = (messRemind, parsedTime, sender) => {
+    return `
+*── 「 RECORDATORIO 」 ──*
+    
+Recordatorio activado con éxito!
+➸ *Mensaje*: ${messRemind}
+➸ *Duración*: ${parsedTime.hours} hora ${parsedTime.minutes} minuto ${parsedTime.seconds} segundo
+➸ *A*: @${sender.id.replace('@c.us', '')}
+    `
+}
+
+exports.reminderAlert = (messRemind, sender) => {
+    return `
+*── 「 RECORDATORIO 」 ──*
+⏰ @${sender.id.replace('@c.us', '')} ⏰
+➸ *Mensaje*: ${messRemind}`
+}
+
+exports.nameChanged = (q) => {
+    return `El nombre de usuario se ha cambiado correctamente a *${q}*`
 }
 
 exports.menu = (jumlahUser, level, xp, role, pushname, requiredXp, premium) => {
