@@ -382,14 +382,14 @@ Total registrados: *${jumlahUser}*
 
 Los siguientes menús están disponibles:
 
-*[1]* Descargas
+*[1]* Descargas/Media
 *[2]* Bot
-*[3]* Miscelaneos
-*[4]* Sticker
-*[5]* Weeaboo
+*[3]* Variados
+*[4]* Stickers
+*[5]* Zona Anime/Otakus
 *[6]* Diversión
-*[7]* Moderación
-*[8]* NSFW
+*[7]* Grupos/Admins
+*[8]* 18+
 *[9]* Dueño
 *[10]* Niveles
 
@@ -403,62 +403,43 @@ Este bot tiene anti-spam en forma de comando de enfriamiento durante *5 segundos
 
 exports.menuDownloader = () => {
     return `
------[ DESCARGAS ]-----
+-----[ DESCARGAS/MEDIA ]-----
 
-1. *${prefix}facebook*
+1. *${prefix}musica*
+Descarga mp3 de Youtube.
+Aliases: -
+Uso: *${prefix}musica* Canción+Artista
+
+2. *${prefix}Video*
+Descargar Video de Youtube.
+Aliases: -
+Usage: *${prefix}Video* Cancion+Artista
+
+3. *${prefix}facebook*
 Descargar video de Facebook.
-Aliases: *fb*
-Usage: *${prefix}facebook* video_link
-
-2. *${prefix}ytmp3*
-Descargar audio de YouTube.
 Aliases: -
-Usage: *${prefix}ytmp3* link
+Usage: *${prefix}facebook* +link
 
-3. *${prefix}ytmp4*
-Descargar video de YouTube.
+4. *${prefix}tomp3*
+Convertir un video a solo audio (MP3).
 Aliases: -
-Usage: *${prefix}ytmp4* link
+Usage: Envia un video con el texto *${prefix}tomp3* o responde un video con *${prefix}tomp3*.
 
-4. *${prefix}joox*
-Descarga música de Joox.
-Aliases: -
-Usage: *${prefix}joox* song's_title
-
-5. *${prefix}tiktok*
-Descargar video de TikTok.
-Aliases: -
-Usage: *${prefix}tiktok* link
-
-6. *${prefix}twitter*
+5. *${prefix}twitter*
 Descargar medios de Twitter.
 Aliases: *twt*
 Usage: *${prefix}twiter* link
 
-7. *${prefix}tiktokpic*
-Descargar foto de perfil de TikTok.
-Aliases: -
-Usage: *${prefix}tiktokpic* username
-
-8. *${prefix}tiktoknowm*
-Descargar video de TikTok sin WM.
-Aliases: *tktnowm*
-Usage: *${prefix}tiktoknowm* link
-
-9. *${prefix}moddroid*
+6. *${prefix}moddroid*
 Buscar mod en moddroid.
 Aliases: -
 Usage: *${prefix}moddroid* APK_name
 
-10. *${prefix}happymod*
+7. *${prefix}happymod*
 Buscar mod en happymod.
 Aliases: -
 Usage: *${prefix}happymod* APK_name
 
-11. *${prefix}linedl*
-Descargador Stickers de línedl.
-Aliases: -
-Usage: *${prefix}linedl* sticker_link
 
 _Index of [1]_
     `
@@ -496,12 +477,12 @@ Usage: *${prefix}ping*
 6. *${prefix}delete*
 Elimina mensajes de bots.
 Aliases: *del*
-Usage: Reply to deleted messages with a caption *${prefix}delete*.
+Usage: Responder a los mensajes de bot con un la leyenda *${prefix}delete*.
 
 7. *${prefix}report*
 Informar errores al dev.
 Aliases: -
-Usage: *${prefix}report* text
+Usage: *${prefix}report* texto
 
 8. *${prefix}tos*
 Términos de servicio.
@@ -511,7 +492,7 @@ Usage: *${prefix}tos*
 9. *${prefix}join*
 Únase al grupo a través del enlace.
 Aliases: -
-Usage: *${prefix}join* group's_link
+Usage: *${prefix}join* link del grupo
 
 10. *${prefix}ownerbot*
 Envíe el contacto del propietario.
@@ -521,22 +502,22 @@ Usage: *${prefix}ownerbot*
 11. *${prefix}getpic*
 Enviar foto de perfil del usuario.
 Aliases: -
-Usage: *${prefix}getpic* @user/62812xxxxxxxx
+Usage: *${prefix}getpic* @user/521812xxxxxxxx
 
 12. *${prefix}premiumcheck*
 Verificación de tiempo activo premium.
 Aliases: *cekpremium*
 Usage: *${prefix}premiumcheck*
 
-13. *${prefix}premiumlist*
-Lista de usuarios premium.
-Aliases: *listpremium*
-Usage: *${prefix}premiumlist*
-
-14. *${prefix}limit*
+13. *${prefix}limit*
 Verifique su límite de comandos remanentes.
 Aliases: -
 Usage: *${prefix}limit*
+
+14. *${prefix}uptime*
+Muestra el Tiempo Activo del Bot.
+Aliases: -
+Usage: *${prefix}uptime*
 
 _Index of [2]_
     `
@@ -544,74 +525,24 @@ _Index of [2]_
 
 exports.menuMisc = () => {
     return `
------[ MISCELANEOS ]-----
+-----[ VARIADOS ]-----
 
 1. *${prefix}say*
 El bot repetirá tu mensaje.
 Aliases: -
-Usage: *${prefix}say* text
+Usage: *${prefix}say* texto
 
-2. *${prefix}lyric*
-Busca letras de canciones.
-Aliases: -
-Usage: *${prefix}lyric* song's_title
-
-3. *${prefix}shortlink*
-Crea un enlace corto.
-Aliases: -
-Usage: *${prefix}shortlink* link
-
-4. *${prefix}wikien*
-Envíe Wikipedia desde el texto dado.
-Aliases: -
-Usage: *${prefix}wikien* query
-
-5. *${prefix}kbbi*
-Envíe definiciones de palabras desde KBBI.
-Aliases: -
-Usage: *${prefix}kbbi* text
-
-6. *${prefix}igstalk*
-Stalk cuenta de Instagram.
-Aliases: -
-Usage: *${prefix}igstalk* ig_username
-
-7. *${prefix}gsmarena*
-Envío de información telefónica desde GSMArena.
-Aliases: -
-Usage: *${prefix}gsmarena* phone's_model
-
-8. *${prefix}receipt*
-Envío de recibo de comida.
-Aliases: *resep*
-Usage: *${prefix}receipt* food's_name
-
-9. *${prefix}ytsearch*
-Envío de resultados de búsqueda de YouTube.
-Aliases: *yts*
-Usage: *${prefix}ytsearch* query
-
-10. *${prefix}tts*
+2. *${prefix}tts*
 Crea un texto a voz. Necesita un código de idioma, lo puede encontrar aquí https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 Aliases: -
-Usage: *${prefix}tts* Código de lenguaje | text
+Usage: *${prefix}tts* Código de lenguaje | texto
 
-11. *${prefix}afk*
+3. *${prefix}afk*
 Configure su cuenta en modo AFK, les diré a quienes lo mencionaron.
 Aliases: -
 Usage: *${prefix}afk* reason. Send any message to group to disable.
 
-12. *${prefix}distance*
-Envío de información de distancia de la ciudad.
-Aliases: -
-Usage: *${prefix}distance* from | to
-
-13. *${prefix}findsticker*
-Etiqueta de búsqueda.
-Aliases: *findstiker*
-Usage: *${prefix}findsticker* text
-
-14. *${prefix}math*
+4. *${prefix}math*
 Una calculadora.
 * = multiplicación
 + = adición
@@ -620,77 +551,12 @@ Una calculadora.
 Aliases: -
 Usage: *${prefix}math* 12*12
 
-15. *${prefix}listsurah*
-Envío de la lista de Al-Qur'an.
-Aliases: -
-Usage: *${prefix}listsurah*
-
-16. *${prefix}surah*
-Envío de sura.
-Aliases: -
-Usage: *${prefix}surah* surah_number
-
-17. *${prefix}js*
-Obtenga un horario reducido.
-Aliases: - 
-Usage: *${prefix}js* area
-
-18. *${prefix}mutual*
-Obtenga contacto aleatorio.
-Aliases: -
-Usage: *${prefix}mutual*
-
-19. *${prefix}whois*
+5. *${prefix}ip*
 Búsqueda de IP.
 Aliases: -
-Usage: *${prefix}whois* ip_address
+Usage: *${prefix}ip* ip_address
 
-20. *${prefix}play*
-Reproduce audio de YouTube.
-Aliases: - 
-Usage: *${prefix}play* title
-
-21. *${prefix}sms*
-Envía SMS como anónimo. (Puerta de enlace SMS)
-Aliases: -
-Usage: *${prefix}sms* message | number
-
-22. *${prefix}toxic*
-Tóxico al azar. (Indonesian)
-Aliases: -
-Usage: *${prefix}toxic*
-
-23. *${prefix}tafsir*
-Interpretación del Corán. (Indonesian)
-Aliases: -
-Usage: *${prefix}tafsir* surah_name ayat
-
-24. *${prefix}motivasi*
-Texto de motivación. (Indonesian)
-Aliases: -
-Usage: *${prefix}motivasi*
-
-25. *${prefix}linesticker*
-Sticker de última línea.
-Aliases: *linestiker*
-Usage: *${prefix}linesticker*
-
-26. *${prefix}alkitab*
-Búsqueda de la Biblia. (Indonesian)
-Aliases: -
-Usage: *${prefix}* gospel_name
-
-27. *${prefix}cekongkir*
-Cheque de tarifa postal. (Indonesian)
-Aliases: -
-Usage: *${prefix}ongkir* service_name | from | to
-
-28. *${prefix}movie*
-Buscar películas.
-Aliases: -
-Usage: *${prefix}movie* title
-
-28. *${prefix}reminder*
+6. *${prefix}reminder*
 Recordatorio. 
 *s* - segundos
 *m* - minutos
@@ -699,104 +565,37 @@ Recordatorio.
 Aliases: -
 Usage: *${prefix}reminder* 10s | recordatorio_mensaje
 
-29. *${prefix}imagetourl*
-Cargador de imágenes.
+7. *${prefix}imagetourl*
+Crea un url/link de una imagen que enviés.
 Aliases: *imgtourl*
-Usage: Send images with caption *${prefix}imagetourl* or reply to the image with a caption *${prefix}imagetourl*.
+Usage: Envia una imagen con el texto *${prefix}imagetourl* or respode una imagencon el texto *${prefix}imagetourl*.
 
-30. *${prefix}infohoax*
-Actualización de información de engaño.
-Aliases: -
-Usage: *${prefix}infohoax*
-
-31. *${prefix}trending*
-Tendencias de Twitter.
-Aliases: -
-Usage: *${prefix}trending*
-
-32. *${prefix}jobseek*
-Solicitante de empleo solo en Indonesia.
-Aliases: -
-Usage: *${prefix}jobseek*
-
-33. *${prefix}spamcall*
-Llamada no deseada.
-Aliases: -
-Usage: *${prefix}spamcall* 812xxxxxxxx
-
-34. *${prefix}spamsms*
-SMS no deseados.
-Aliases: -
-Usage: *${prefix}spamsms* 0812xxxxxxxx amount
-
-35. *${prefix}email*
-Enviar un correo electrónico.
-Aliases: -
-Usage: *${prefix}email* email | subject | message
-
-36. *${prefix}quotes*
-Citas indonesias al azar.
-Aliases: -
-Usage: *${prefix}quotes*
-
-37. *${prefix}genshininfo*
-Información de personajes de Genshin Impact.
-Aliases: *genshin*
-Usage: *${prefix}genshininfo* chara_name
-
-38. *${prefix}translate*
+8. *${prefix}translate*
 Traduce un texto.
 Aliases: *trans*
-Usage: *${prefix}translate* texto | code_lang
+Usage: *${prefix}translate* texto | codigo_lenguaje
 
-39. *${prefix}hadees*
-Información de Hadees.
-Aliases: *hadis*
-Usage: *${prefix}hadees* hadees_name | hadees_number
-
-40. *${prefix}asmaulhusna*
-Asmal Hosna.
-Aliases: -
-Usage: *${prefix}asmaulhusna* asmaulhusna_number
-
-41. *${prefix}randomquran*
-Sura del Corán al azar.
-Aliases: -
-Usage: *${prefix}randomquran*
-
-42. *${prefix}coronavirus*
+9. *${prefix}coronavirus*
 Verifique los casos de COVID-19.
 Aliases: *corona*
 Usage: *${prefix}coronavirus* nombre_nacion
 
-43. *${prefix}tomp3*
-Convertir un video a solo audio (MP3).
+10. *${prefix} imagen*
+Busca una Imagen.
 Aliases: -
-Usage: Send a video with caption *${prefix}tomp3* or reply video with a caption *${prefix}tomp3*.
+UsageL *${prefix}imagen* imagen a buscar
 
-44. *${prefix} frasestick*
-Texto a sticker.
-Aliases: -
-UsageL *${prefix}ttp* text
-
-45. *${prefix}addsticker*
-Agregar Sticker a la base de datos
-Aliases: *addstiker*
-Usage: Responde a un Sticker con *${prefix}addsticker* Tecla del Sticler.
-
-46. *${prefix}delsticker*
-Elimina Sticker de la base de datos.
-Aliases: *delstiker*
-Usage: *${prefix}delstiker* tecla del sticker
-
-47. *${prefix}stickerlist*
-Muestra la lista de stickers en la base de datos.
-Aliases: *liststicker stikerlist liststiker*
-Usage: *${prefix}stickerlist*
-
-48. *${prefix}nightcore*
+11. *${prefix}nightcore*
 Crea un efecto nightcore a partir del audio transmitido.
 Aliases: Responder Audio con *${prefix}nightcore*.
+
+12. *${prefix}toptt*
+Envia una nota de voz a partir de un mp3.
+Aliases: Responder Audio con *${prefix}toptt*.
+
+13. *${prefix}clima*
+Conoce el clima de tu ciudas.
+Aliases: Envia *${prefix}clima* y tu ciudad.
 
 _Index of [3]_
     `
@@ -804,47 +603,94 @@ _Index of [3]_
 
 exports.menuSticker = () => {
     return `
------[ STICKER ]-----
+-----[ STICKERS ]-----
 
 1. *${prefix}sticker*
 Crea stickers a partir de imágenes enviadas o respondidas.
 Aliases: *stiker*
 Usage: Enviar imágenes con título *${prefix}sticker* o responde a las imágenes con la leyenda *${prefix}sticker*.
 
-2. *${prefix}stickergif*
+2. *${prefix}gif*
 Crea stickers a partir de videos / GIF.
 Aliases: *stikergif*
-Usage: Enviar videos / GIF con subtítulo *${prefix}stickergif* o responde a los videos / GIF con la leyenda *${prefix}stickergif*.
+Usage: Enviar videos / GIF con subtítulo *${prefix}gif* o responde a los videos / GIF con la leyenda *${prefix}gif*.
 
-3. *${prefix}ttg*
-Crea texto en pegatinas GIF.
+3. *${prefix} frasestick*
+Texto a sticker.
 Aliases: -
-Usage: *${prefix}ttg* text
+UsageL *${prefix}frasestick* texto/frase
 
-4. *${prefix}stickertoimg*
+4. *${prefix} robado*
+Roba/Renombra los Stickers (nombre | autor.
+Aliases: -
+Usage: *${prefix}robado* nombre | autor
+
+5. *${prefix} wasted*
+Crea un efecto Wasted como GTA.
+Aliases: -
+Usage: Envia una imagen con el texto *${prefix}wasted* o responde a una imagen con el texto *${prefix}wasted*.
+
+6. *${prefix} red*
+Crea una imagen y un sticker con un efecto rojo.
+Aliases: -
+Usage: Envia una imagen con el texto *${prefix}red* o responde a una imagen con el texto *${prefix}red*.
+
+7. *${prefix} sepia*
+Crea una imagen y un sticker con un efecto sepia.
+Aliases: -
+Usage: Envia una imagen con el texto *${prefix}sepia* o responde a una imagen con el texto *${prefix}sepia*.
+
+8. *${prefix} gray*
+Crea una imagen y un sticker con un efecto blanco y negro.
+Aliases: -
+Usage: Envia una imagen con el texto *${prefix}gray* o responde a una imagen con el texto *${prefix}gray*.
+
+9. *${prefix} gay*
+Crea una imagen y un sticker con un efecto de la bandera de colores.
+Aliases: -
+Usage: Envia una imagen con el texto *${prefix}gay* o responde a una imagen con el texto *${prefix}gay*.
+
+10. *${prefix} nobg*
+Elimina el fondo de una imagen y creala sticker (solo premium).
+Aliases: -
+Usage: Envia una imagen con el texto *${prefix}nobg*.
+
+11. *${prefix} emoji*
+Crea un sticker de un emoji.
+Aliases: -
+Usage: Envie el comando *${prefix}emoji* y el emoji que quiere hacer sticker.
+
+12. *${prefix} colores*
+Crea un sticker de texto o emojis con colores.
+Aliases: -
+Usage: Envie el comando *${prefix}colores* y el texto o emoji que quiere hacer sticker.
+
+13. *${prefix}addsticker*
+Agregar Sticker a la base de datos
+Aliases: *addstiker*
+Usage: Responde a un Sticker con *${prefix}addsticker* Tecla del Sticler.
+
+14. *${prefix}delsticker*
+Elimina Sticker de la base de datos.
+Aliases: *delstiker*
+Usage: *${prefix}delstiker* tecla del sticker
+
+15. *${prefix}stickerlist*
+Muestra la lista de stickers en la base de datos.
+Aliases: *liststicker stikerlist liststiker*
+Usage: *${prefix}stickerlist*
+
+16. *${prefix}toimg*
 Convertir sticker en imagen.
 Aliases: *stikertoimg*
-Usage: Responde a las pegatinas con la leyenda *${prefix}stickertoimg*.
+Usage: Responde a los stickers con la leyenda *${prefix}toimg*.
 
-5. *${prefix}emoji*
-Convierte emoji en sticker.
-Aliases: *emojistiker*
-Usage: *${prefix}emojisticker* emoji
-
-6. *${prefix}stickerwm*
-Crea una sticker con metadatos/WM.
-Aliases: *stcwm*
-Usage: Enviar imágenes con subtítulo *${prefix}stickerwm* nombre_paquete | nombre del autor o responde a la imagen con una leyenda *${prefix}stickerwm* nombre_paquete | nombre del autor.
-
-7. *${prefix}stickermeme*
-Crea un meme de sticker.
-Aliases: *stcmeme*
-Usage: Send images with caption *${prefix}sticker* upper_text | bottom_text or reply to the images with a caption *${prefix}sticker* upper_text | bottom_text.
-
-8. *${prefix}takestick*
-Edite los metadatos de la etiqueta.
+9. *${prefix} triggered*
+Crea un sticker gif a partir de una imagen con un efecto y leyenda triggered.
 Aliases: -
-Usage: Responde a las stickers con una leyenda *${prefix}takestick* pack_name | author_name
+Usage: Envia una imagen con el texto *${prefix}triggered* o responde a una imagen con el texto *${prefix}triggered*.
+
+
 
 _Index of [4]_
     `
@@ -852,7 +698,12 @@ _Index of [4]_
 
 exports.menuWeeaboo = () => {
     return `
------[ WEEABOO ]-----
+-----[ ANIME/OTAKUS ]-----
+
+1. *${prefix}lolivid*
+Envía un video random de lolis.
+Aliases: -
+Usage: *${prefix}lolivid*
 
 1. *${prefix}neko*
 Envía una foto de chica neko.
@@ -869,40 +720,10 @@ Envía fotos de chicas kemonomimi.
 Aliases: -
 Usage: *${prefix}kemono*
 
-4. *${prefix}kusonime*
-Busque información de anime y enlaces de descarga por lotes en Kusonime.
-Aliases: -
-Usage: *${prefix}kusonime* anime's_title
-
-5. *${prefix}komiku*
-Buscando información de manga y enlaces de descarga en Komiku.
-Aliases: -
-Usage: *${prefix}komiku* manga's_title
-
-6. *${prefix}wait*
-Busque la fuente de anime en la escena de las capturas de pantalla.
-Aliases: -
-Usage: Send screenshots with caption *${prefix}wait* or reply to the screenshots with a caption *${prefix}wait*.
-
-7. *${prefix}source*
-Busque fuentes del panel doujin, ilustraciones e imágenes relacionadas con el anime.
-Aliases: *sauce*
-Usage: Send images with caption *${prefix}source* or reply to the images with a caption *${prefix}source*.
-
 8. *${prefix}waifu*
 Envía fotos waifu al azar.
 Aliases: -
 Usage: *${prefix}waifu*
-
-9. *${prefix}anitoki*
-Última actualización de Anitoki fansub.
-Aliases: -
-Usage: *${prefix}anitoki*
-
-10. *${prefix}neonime*
-Última actualización de Neonime Fansub.
-Aliases: -
-Usage: *${prefix}neonime*
 
 11. *${prefix}anoboy*
 Anime en curso en el fansub de Anoboy.
@@ -917,140 +738,34 @@ exports.menuFun = () => {
     return `
 -----[ DIVERTIDO ]-----
 
-1. *${prefix}hartatahta*
-Haz una imagen del "Harta Tahta Nama".
-Aliases: -
-Usage: *${prefix}hartatahta* name
 
-2. *${prefix}partner*
-Partido de Weton. (Indonesio)
-Aliases: *pasangan*
-Usage: *${prefix}partner* name | partner
-
-3. *${prefix}zodiac*
-Fortuna semanal del zodíaco. (Indonesio)
-Aliases: *zodiak*
-Usage: *${prefix}zodiac* zodiac
-
-4. *${prefix}write*
-Tome notas escritas en un libro.
-Aliases: *nulis*
-Usage: *${prefix}write* text
-
-5. *${prefix}glitchtext*
-Crea un texto con estilo de falla.
-Aliases: *glitext*
-Usage: *${prefix}glitchtext* text1 | text2
-
-6. *${prefix}simi*
-Chat SimiSimi. (Indonesio)
-Aliases: -
-Usage: *${prefix}simi* text
-
-7. *${prefix}blackpink*
-Crea un texto con estilo de logotipo Blackpink.
-Aliases: -
-Usage: *${prefix}blackpink* text
-
-8. *${prefix}phmaker*
-Crea un texto con el estilo del logotipo de Pornhub.
-Aliases: -
-Usage: *${prefix}phmaker* left_text | right_text
-
-9. *${prefix}galaxy*
-Crea un texto con estilo de galaxia.
-Aliases: -
-Usage: *${prefix}galaxy* text
-
-10. *${prefix}tod*
-Juega a la verdad o al desafío. (Indonesio)
-Aliases: -
-Usage: *${prefix}tod*
-
-11. *${prefix}weton*
-Fortuna de Weton. (Indonesio)
-Aliases: -
-Usage: *${prefix}weton* date | month | year
-
-12. *${prefix}triggered*
-Aplicar un efecto de activación a la imagen.
-Aliases: -
-Usage: Enviar imagen con subtítulo *${prefix}triggered* o responder a alguien mensaje con subtítulo *${prefix}desencadenado * o puede usar directamente *${prefix}triggered*.
-
-13. *${prefix}kiss*
-Besar a alguien ( ͡° ͜ʖ ͡°).
+1. *${prefix}kiss*
+Besar a alguien envia la foto de la persona que quieres besar ( ͡° ͜ʖ ͡°).
 Aliases: -
 Usage: Enviar imagen con subtítulo *${prefix}kiss* o responder una imagen con un título *${prefix}kiss*.
 
-14. *${prefix}asupan*
-Dosis diaria de TikTok.
+2. *${prefix}phcomment*
+Crea una imagen con estilo de la sección de comentarios de Pornhub.
 Aliases: -
-Usage: *${prefix}asupan*
+Usage: *${prefix}phcomment* Usuario | Texto que desees
 
-15. *${prefix}citacita*
-Ideales de meme. (Indonesio)
-Aliases: -
-Usage: *${prefix}citacita*
+3. *${prefix}patear*
+Dale una patada a alguien del grupo. 
+Otros usos. - 
+Uso:  *${prefix}patear* @miembro1
 
-16. *${prefix}phcomment*
-Crea una imagen con estilo en la sección de comentarios de Pornhub.
-Aliases: -
-Usage: *${prefix}phcomment* username | text
+4. *${prefix}besar*
+Date un beso con alguien del grupo 7u7. 
+Otros usos. - 
+Uso:  *${prefix}besar* @miembro1
 
-17. *${prefix}ffbanner*
-Crea un estandarte de Free Fire.
-Aliases: -
-Usage: *${prefix}ffbanner* text1 | text2
+5. *${prefix}golpear*
+Golpea a alguien del grupo. 
+Otros usos. - 
+Uso:  *${prefix}golpear* @miembro1
 
-18. *${prefix}fflogo*
-Crea un logotipo de personajes de Free Fire.
-Aliases: -
-Usage: *${prefix}fflogo* text1 | text2
 
-19. *${prefix}neontext*
-Crea una imagen de texto de neón
-Aliases: *neon*
-Usage: *${prefix}neontext* up | center | bottom
 
-20. *${prefix}firemaker*
-Crea un texto de fuego.
-Aliases: -
-Usage: *${prefix}firemaker* text
-
-21. *${prefix}mlmaker*
-Crea una imagen de héroe de ML con texto.
-Aliases: -
-Usage: *${prefix}mlmaker* hero_name | text
-
-22. *${prefix}balloonmaker*
-Crea un par de imágenes de globos.
-Aliases: *blmaker*
-Usage: *${prefix}balloonmaker* name1 | name2
-
-23. *${prefix}sliding*
-Crea un texto deslizante.
-Aliases: -
-Usage: *${prefix}sliding* text
-
-24. *${prefix}wasted*
-Crea un efecto desperdiciado.
-Aliases: -
-Usage: Send image with caption *${prefix}wasted* or reply image with caption *${prefix}wasted*.
-
-25. *${prefix}caklontong*
-Prueba de Cak Lontong.
-Aliases: -
-Usage: *${prefix}caklontong*
-
-26. *${prefix}hilih*
-Hilih-ify tu texto.
-Aliases: -
-Usage: *${prefix}hilih* text.
-
-27. *${prefix}tebakgambar*
-Prueba de adivinar la imagen.
-Aliases: -
-Usage: *${prefix}tebakgambar*
 
 _Index of [6]_
     `
@@ -1058,7 +773,7 @@ _Index of [6]_
 
 exports.menuModeration = () => {
     return `
------[ MODERACIÓN ]-----
+-----[ GRUPOS/ADMINS ]-----
 
 1. *${prefix}add*
 Agregue usuarios al grupo.
@@ -1091,7 +806,7 @@ Aliases: -
 Usage: *${prefix}everyone*
 
 7. *${prefix}nsfw*
-Alternar el modo NSFW.
+Activar/desactivar el modo NSFW (18+).
 Aliases: -
 Usage: *${prefix}nsfw* enable/disable
 
@@ -1101,22 +816,22 @@ Aliases: -
 Usage: Enviar imágenes con subtítulo *${prefix}groupicon* o responde a las imágenes con una leyenda *${prefix}groupicon*.
 
 9. *${prefix}antilink*
-Alternar la función de enlace de grupo de tía.
+Activar/Desactivar la función de proteccion de enlace de grupo de Whatsapp.
 Aliases: -
 Usage: *${prefix}antilink* enable/disable
 
 10. *${prefix}welcome*
-Alternar la función de bienvenida.
+Activar/Desactivar la función de bienvenida.
 Aliases: -
 Usage: *${prefix}welcome* enable/disable
 
 11. *${prefix}autosticker*
-Alternar la función de autoadhesivo. Cada imagen enviada se convertirá en una pegatina.
+Alternar la función de autoadhesivo. Cada imagen enviada se convertirá en un Sticker.
 Aliases: *autostiker autostik*
 Usage: *${prefix}autostiker* enable/disable
 
 12. *${prefix}antinsfw*
-Alternar enlace anti-NSFW.
+Activar/Desactivar proteccion de enlace anti-NSFW.
 Aliases: -
 Usage: *${prefix}antinsfw* enable/disable
 
@@ -1125,88 +840,103 @@ Configure el grupo para que solo administradores envien mensajes.
 Aliases: -
 Usage: *${prefix}mutegc* enable/disable
 
+13. *${prefix}revoke*
+Restablecer el enlace del grupo.
+Aliases: -
+Usage: *${prefix}revoke*.
+
+13. *${prefix}linkgroup*
+Envia el enlace del grupo
+Aliases: -
+Usage: *${prefix}linkgroup*.
+
+13. *${prefix}ownergroup*
+Muestra quien creo el grupo.
+Aliases: -
+Usage: *${prefix}ownergroup*.
+
+13. *${prefix}admins*
+Muestra a los administradores del grupo.
+Aliases: -
+Usage: *${prefix}admins*.
+
+13. *${prefix}groupinfo*
+Muestra la informacion del grupo.
+Aliases: -
+Usage: *${prefix}groupinfo*.
+
+13. *${prefix}wame*
+Muestra ek link de tu Wa.me
+Aliases: -
+Usage: *${prefix}wame*.
+
 _Index of [7]_
     `
 }
 
 exports.menuNsfw = () => {
     return `
------[ NSFW ]-----
+-----[ 18+ ]-----
 
 1. *${prefix}lewds*
 Envía fotos de anime lascivo.
 Aliases: *lewd*
 Usage: *${prefix}lewds*
 
-2. *${prefix}multilewds*
-Envía hasta 5 imágenes lascivas de anime. (SOLAMENTE PREMIUM)
-Aliases: *multilewds multilewd mlewd mlewds*
-Usage: *${prefix}multilewds*
-
-3. *${prefix}nhentai*
-Envío de información doujinshi desde nHentai.
-Aliases: *nh*
-Usage: *${prefix}nhentai* code
-
-4. *${prefix}nhdl*
-Descargue doujin de nHentai como archivo PDF. (SOLAMENTE PREMIUM)
-Aliases: -
-Usage: *${prefix}nhdl* code
-
-5. *${prefix}nekopoi*
-Enviar el último enlace de vídeo Nekopoi.
-Aliases: -
-Usage: *${prefix}nekopoi*
-
-6. *${prefix}multifetish*
-Envía hasta 5 fotos fetiche. (SOLAMENTE PREMIUM)
-Aliases: *mfetish*
-Usage: *${prefix}multifetish* armpits/feets/thighs/ass/boobs/belly/sideboobs/ahegao
-
-7. *${prefix}waifu18*
+2. *${prefix}waifu18*
 Envía fotos waifu NSFW aleatorias.
 Aliases: -
 Usage: *${prefix}waifu18*
 
-8. *${prefix}fetish*
+3. *${prefix}fetish*
 Envía fotos fetiche.
 Aliases: -
-Usage: *${prefix}fetish* armpits/feets/thighs/ass/boobs/belly/sideboobs/ahegao
+Usage: *${prefix}fetish* + alguna de las siguientes armpits/feets/thighs/ass/boobs/belly/sideboobs/ahegao
 
-9. *${prefix}phdl*
+4. *${prefix}tits*
+Envía fotos de pechos.
+Aliases: -
+Usage: *${prefix}tits*.
+
+5. *${prefix}bdsm*
+Envía fotos hot de bdsm.
+Aliases: -
+Usage: *${prefix}bdsm*.
+
+6. *${prefix}blowjob*
+Envía fotos hot.
+Aliases: -
+Usage: *${prefix}blowjob*.
+
+7. *${prefix}masturb*
+Envía fotos hot.
+Aliases: -
+Usage: *${prefix}masturb*.
+
+8. *${prefix}phdl*
 Descarga videos de Pornhub.
 Aliases: -
-Usage *${prefix}phdl* link
+Usage *${prefix}phdl* mas link
 
-10. *${prefix}yuri*
+9. *${prefix}yuri*
 Envía fotos de yuri al azar.
 Aliases: -
 Usage: *${prefix}yuri*
 
-11. *${prefix}lewdavatar*
+10. *${prefix}lewdavatar*
 Envía avatares lascivos al azar.
 Aliases: -
 Usage: *${prefix}lewdavatar*
 
-12. *${prefix}femdom*
+11. *${prefix}femdom*
 Envía fotos de femdom al azar.
 Aliases: -
 Usage: *${prefix}femdom*
 
-13. *${prefix}nhsearch*
-Búsqueda nHentai.
+12. *${prefix}nekopoi*
+Enviar el último enlace de vídeo Nekopoi.
 Aliases: -
-Usage: *${prefix}nhsearch* query
-
-14. *${prefix}nekosearch*
-Búsqueda de Nekopoi.
-Aliases: -
-Usage: *${prefix}nekosearch* query
-
-15. *${prefix}cersex*
-Historias de adultos al azar (indonesio).
-Aliases: -
-Usage: *${prefix}cersex*
+Usage: *${prefix}nekopoi*
 
 _Index of [8]_
     `
