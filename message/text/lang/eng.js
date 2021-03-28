@@ -742,6 +742,25 @@ Texto a sticker.
 Aliases: -
 UsageL *${prefix}ttp* text
 
+45. *${prefix}addsticker*
+Agregar Sticker a la base de datos
+Aliases: *addstiker*
+Usage: Responde a un Sticker con *${prefix}addsticker* Tecla del Sticler.
+
+46. *${prefix}delsticker*
+Elimina Sticker de la base de datos.
+Aliases: *delstiker*
+Usage: *${prefix}delstiker* tecla del sticker
+
+47. *${prefix}stickerlist*
+Muestra la lista de stickers en la base de datos.
+Aliases: *liststicker stikerlist liststiker*
+Usage: *${prefix}stickerlist*
+
+48. *${prefix}nightcore*
+Crea un efecto nightcore a partir del audio transmitido.
+Aliases: Responder Audio con *${prefix}nightcore*.
+
 _Index of [3]_
     `
 }
