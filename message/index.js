@@ -935,7 +935,7 @@ if (autores. match ('robotina')){
                 await bocchi.reply(from, eng.wait(), id)
                 misc.corona(q)
                     .then(async (res) => {
-                        await bocchi.sendText(from, '🌎️ Covid Info - ' + q.charAt(0).toUpperCase() + q.slice(1) + ' 🌍️\n\n✨️ Total Cases: ' + `${res.cases}` + '\n📆️ Today\'s Cases: ' + `${res.todayCases}` + '\n☣️ Total Deaths: ' + `${res.deaths}` + '\n☢️ Today\'s Deaths: ' + `${res.todayDeaths}` + '\n⛩️ Active Cases: ' + `${res.active}` + '.')
+                        await bocchi.sendText(from, '🌎️ Covid Info - ' + q.charAt(0).toUpperCase() + q.slice(1) + ' 🌍️\n\n✨️ Casos Totales: ' + `${res.cases}` + '\n📆️ Casos del Dia: ' + `${res.todayCases}` + '\n☣️ Total Muertes: ' + `${res.deaths}` + '\n☢️ Muertes del dia: ' + `${res.todayDeaths}` + '\n⛩️ Casos Activos: ' + `${res.active}` + '.')
                         console.log('Success sending Result!')
                     })
                     .catch(async (err) => {
@@ -1638,42 +1638,42 @@ if (autores. match ('robotina')){
 			
 		case 'addsticker': // by @hardianto02_
             case 'addstiker':
-                if (!isRegistered) return await bocchi.reply(from, ind.notRegistered(), id)
-                if (!q) return await bocchi.reply(from, ind.wrongFormat(), id)
-                if (!isGroupMsg) return await bocchi.reply(from, ind.groupOnly(), id) 
+                if (!isRegistered) return await bocchi.reply(from, eng.notRegistered(), id)
+                if (!q) return await bocchi.reply(from, eng.wrongFormat(), id)
+                if (!isGroupMsg) return await bocchi.reply(from, eng.groupOnly(), id) 
                 if (isQuotedSticker) {
                     if (_stick.includes(q)) {
-                        await bocchi.reply(from, ind.stickerAddAlready(q), id)
+                        await bocchi.reply(from, eng.stickerAddAlready(q), id)
                     } else { 
                         _stick.push(q)
                         fs.writeFileSync('./database/sticker.json', JSON.stringify(_stick))
                         const mediaData = await decryptMedia(quotedMsg, uaOverride)
                         fs.writeFileSync(`./temp/sticker/${q}.webp`, mediaData)
-                        await bocchi.reply(from, ind.stickerAdd(), id)
+                        await bocchi.reply(from, eng.stickerAdd(), id)
                     }
                 } else {
-                    await bocchi.reply(from, ind.wrongFormat(), id)
+                    await bocchi.reply(from, eng.wrongFormat(), id)
                 }
             break
             case 'delsticker':
-                if (!isRegistered) return await bocchi.reply(from, ind.notRegistered(), id)
-                if (!q) return await bocchi.reply(from, ind.wrongFormat(), id)
+                if (!isRegistered) return await bocchi.reply(from, eng.notRegistered(), id)
+                if (!q) return await bocchi.reply(from, eng.wrongFormat(), id)
                 if (!isGroupMsg) return await bocchi.reply(from, ind.groupOnly(), id)
                 if (_stick.includes(q)) {
                     _stick.splice(q, 1)
                     fs.writeFileSync('./database/sticker.json', JSON.stringify(_stick))
                     fs.unlinkSync(`./temp/sticker/${q}.webp`)
-                    await bocchi.reply(from, ind.stickerDel(), id)
+                    await bocchi.reply(from, eng.stickerDel(), id)
                 } else {
-                    await bocchi.reply(from, ind.stickerNotFound())
+                    await bocchi.reply(from, eng.stickerNotFound())
                 }
             break
             case 'stickerlist':
             case 'liststicker':
             case 'stikerlist':
             case 'liststiker':
-                if (!isRegistered) return await bocchi.reply(from, ind.notRegistered(), id)
-                if (!isGroupMsg) return await bocchi.reply(from, ind.groupOnly(), id)
+                if (!isRegistered) return await bocchi.reply(from, eng.notRegistered(), id)
+                if (!isGroupMsg) return await bocchi.reply(from, eng.groupOnly(), id)
                 let stickerList = `*── 「 STICKER DATABASE 」 ──*\nTotal: ${_stick.length}\n\n`
                 for (let i of _stick) {
                     stickerList += `➸ ${i.replace(_stick)}\n`
@@ -2072,7 +2072,7 @@ if (autores. match ('robotina')){
                 if (!isRegistered) return await bocchi.reply(from, eng.notRegistered(), id)
                 if (!isPremium) return await bocchi.reply(from, eng.notPremium(), id)
                 const cekExp = ms(premium.getPremiumExpired(sender.id, _premium) - Date.now())
-                await bocchi.reply(from, `*「 PREMIUM EXPIRE 」*\n\n➸ *ID*: ${sender.id}\n➸ *Premium left*: ${cekExp.days} day(s) ${cekExp.hours} hour(s) ${cekExp.minutes} minute(s)`, id)
+                await bocchi.reply(from, `*「 PREMIUM EXPIRA EN 」*\n\n➸ *ID*: ${sender.id}\n➸ *Teimpo Restante*: ${cekExp.days} dia(s) ${cekExp.hours} hora(s) ${cekExp.minutes} minutos(s)`, id)
             break
             case 'premiumlist':
             case 'listpremium':
@@ -3044,7 +3044,7 @@ if (autores. match ('robotina')){
                     const dataPotoWt = await decryptMedia(encryptMediaWt, uaOverride)
                     const fotoWtNya = await uploadImages(dataPotoWt, `fotoProfilWt.${sender.id}`)
                     await bocchi.reply(from, eng.wait(), id)
-                    await bocchi.sendFileFromUrl(from, `https://some-random-api.ml/canvas/wasted?avatar=${fotoWtNya}`, 'Wasted.jpg', 'Ini..., sticker nya lagi di kirim', id).then(() => bocchi.sendStickerfromUrl(from, `https://some-random-api.ml/canvas/wasted?avatar=${fotoWtNya}`))
+                    await bocchi.sendFileFromUrl(from, `https://some-random-api.ml/canvas/wasted?avatar=${fotoWtNya}`, 'Wasted.jpg', 'El Sticker Se envia en un Momento', id).then(() => bocchi.sendStickerfromUrl(from, `https://some-random-api.ml/canvas/wasted?avatar=${fotoWtNya}`))
                     console.log('Success sending Wasted image!')
                 } else {
                     await bocchi.reply(from, eng.wrongFormat(), id)
