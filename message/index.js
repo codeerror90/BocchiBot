@@ -1682,25 +1682,28 @@ if (autores. match ('robotina')){
                         console.log('Success sending Al-Kitab!')
                     })
             break
+			
             case 'reminder': // by Slavyan
-                if (!isRegistered) return await bocchi.reply(from, eng.notRegistered(), id)
-                if (!q.includes('|')) return await bocchi.reply(from, eng.wrongFormat(), id)
-                if (limit.isLimit(sender.id, _limit, limitCount, isPremium, isOwner)) return await bocchi.reply(from, eng.limit(), id)
+                if (!isRegistered) return await bocchi.reply(from, ind.notRegistered(), id)
+                if (!q.includes('|')) return await bocchi.reply(from, ind.wrongFormat(), id)
+                if (limit.isLimit(sender.id, _limit, limitCount, isPremium, isOwner)) return await bocchi.reply(from, ind.limit(), id)
                 limit.addLimit(sender.id, _limit, isPremium, isOwner)
                 const timeRemind = q.substring(0, q.indexOf('|') - 1)
                 const messRemind = q.substring(q.lastIndexOf('|') + 2)
                 const parsedTime = ms(toMs(timeRemind))
                 reminder.addReminder(sender.id, messRemind, timeRemind, _reminder)
-                await bocchi.sendTextWithMentions(from, `*「 REMINDER 」*\n\nReminder diaktifkan! :3\n\n➸ *Pesan*: ${messRemind}\n➸ *Durasi*: ${parsedTime.hours} jam ${parsedTime.minutes} menit ${parsedTime.seconds} detik\n➸ *Untuk*: @${sender.id.replace('@c.us', '')}`, id)
+                await bocchi.sendTextWithMentions(from, ind.reminderOn(messRemind, parsedTime, sender))
                 const intervRemind = setInterval(async () => {
                     if (Date.now() >= reminder.getReminderTime(sender.id, _reminder)) {
-                        await bocchi.sendTextWithMentions(from, `⏰ *「 REMINDER 」* ⏰\n\nAkhirnya tepat waktu~ @${sender.id.replace('@c.us', '')}\n\n➸ *Pesan*: ${reminder.getReminderMsg(sender.id, _reminder)}`)
+                        await bocchi.sendTextWithMentions(from, ind.reminderAlert(reminder.getReminderMsg(sender.id, _reminder), sender))
                         _reminder.splice(reminder.getReminderPosition(sender.id, _reminder), 1)
                         fs.writeFileSync('./database/user/reminder.json', JSON.stringify(_reminder))
                         clearInterval(intervRemind)
                     }
                 }, 1000)
             break
+			
+			
             case 'imagetourl':
             case 'imgtourl':
                 if (!isRegistered) return await bocchi.reply(from, eng.notRegistered(), id)
