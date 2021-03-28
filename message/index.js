@@ -88,6 +88,7 @@ let _limit = JSON.parse(fs.readFileSync('./database/user/limit.json'))
 const _afk = JSON.parse(fs.readFileSync('./database/user/afk.json'))
 const _reminder = JSON.parse(fs.readFileSync('./database/user/reminder.json'))
 const _daily = JSON.parse(fs.readFileSync('./database/user/daily.json'))
+const _stick = JSON.parse(fs.readFileSync('./database/bot/sticker.json'))
 const _setting = JSON.parse(fs.readFileSync('./database/bot/setting.json'))
 let { memberLimit, groupLimit } = _setting
 const slce = JSON.parse(fs.readFileSync('./database/group/silence.json'))
@@ -302,6 +303,14 @@ const double = Math.floor(Math.random() * 2) + 1
                 await bocchi.removeParticipant(groupId, sender.id)
              }
          }
+	    
+	 // Sticker keywords detector by: @hardianto02_
+        if (isGroupMsg && isRegistered) {
+            if (_stick.includes(chats)) {
+                await bocchi.sendImageAsSticker(from, `./temp/sticker/${chats}.webp`, { author: '@SlavyanDesu', pack: 'BocchiBot' })
+            }
+        }   
+	    
         // Anti-fake-group link detector
         if (isGroupMsg && !isGroupAdmins && isBotGroupAdmins && isDetectorOn && !isOwner) {
             if (chats.match(new RegExp(/(https:\/\/chat.(?!whatsapp.com))/gi))) {
@@ -367,7 +376,7 @@ const double = Math.floor(Math.random() * 2) + 1
  if (autores. match ('tb.php')){
  	if (isGroupAdmins) { return console.log('Excluyendo admin !')
       } else if (isGroupMsg) { 
-await bocchi.reply(from, '🔰Anti link / Posible Vius 🚫', id)
+await bocchi.reply(from, '🔰Anti link / Posible Virus 🚫', id)
 bocchi.removeParticipant(groupId, sender.id)
 }
 }
@@ -430,6 +439,9 @@ if (autores. match ('robotina')){
             case 'antiporn': // Premium, chat VideFikri
                 await bocchi.reply(from, 'Premium Feature!\n\nContact: wa.me/6285692655520?text=Buy%20Anti%20Porn', id)
             break
+			
+			
+			
 
             // Register by Slavyan
             case 'register':
@@ -1606,6 +1618,52 @@ if (autores. match ('robotina')){
                         await bocchi.reply(from, 'Error!', id)
                     })
             break
+			
+		case 'addsticker': // by @hardianto02_
+            case 'addstiker':
+                if (!isRegistered) return await bocchi.reply(from, ind.notRegistered(), id)
+                if (!q) return await bocchi.reply(from, ind.wrongFormat(), id)
+                if (!isGroupMsg) return await bocchi.reply(from, ind.groupOnly(), id) 
+                if (isQuotedSticker) {
+                    if (_stick.includes(q)) {
+                        await bocchi.reply(from, ind.stickerAddAlready(q), id)
+                    } else { 
+                        _stick.push(q)
+                        fs.writeFileSync('./database/sticker.json', JSON.stringify(_stick))
+                        const mediaData = await decryptMedia(quotedMsg, uaOverride)
+                        fs.writeFileSync(`./temp/sticker/${q}.webp`, mediaData)
+                        await bocchi.reply(from, ind.stickerAdd(), id)
+                    }
+                } else {
+                    await bocchi.reply(from, ind.wrongFormat(), id)
+                }
+            break
+            case 'delsticker':
+                if (!isRegistered) return await bocchi.reply(from, ind.notRegistered(), id)
+                if (!q) return await bocchi.reply(from, ind.wrongFormat(), id)
+                if (!isGroupMsg) return await bocchi.reply(from, ind.groupOnly(), id)
+                if (_stick.includes(q)) {
+                    _stick.splice(q, 1)
+                    fs.writeFileSync('./database/sticker.json', JSON.stringify(_stick))
+                    fs.unlinkSync(`./temp/sticker/${q}.webp`)
+                    await bocchi.reply(from, ind.stickerDel(), id)
+                } else {
+                    await bocchi.reply(from, ind.stickerNotFound())
+                }
+            break
+            case 'stickerlist':
+            case 'liststicker':
+            case 'stikerlist':
+            case 'liststiker':
+                if (!isRegistered) return await bocchi.reply(from, ind.notRegistered(), id)
+                if (!isGroupMsg) return await bocchi.reply(from, ind.groupOnly(), id)
+                let stickerList = `*── 「 STICKER DATABASE 」 ──*\nTotal: ${_stick.length}\n\n`
+                for (let i of _stick) {
+                    stickerList += `➸ ${i.replace(_stick)}\n`
+                }
+                await bocchi.sendText(from, stickerList)
+            break
+			
             case 'toxic':
                 if (!isRegistered) return await bocchi.reply(from , eng.notRegistered(), id)
                 await bocchi.reply(from, toxic(), id)
@@ -1804,6 +1862,45 @@ if (autores. match ('robotina')){
                 }
             break
 
+		case 'nightcore':
+                if (!isRegistered) return await bocchi.reply(from, eng.notRegistered(), id)
+                if (isMedia && isAudio || isQuotedAudio || isVoice || isQuotedVoice) {
+                    if (limit.isLimit(sender.id, _limit, limitCount, isPremium, isOwner)) return await bocchi.reply(from, eng.limit(), id)
+                    limit.addLimit(sender.id, _limit, isPremium, isOwner)
+                    await bocchi.reply(from, eng.wait(), id)
+                    const encryptMedia = isQuotedAudio || isQuotedVoice ? quotedMsg : message
+                    console.log(color('[WAPI]', 'green'), 'Downloading and decrypting media...')
+                    const mediaData = await decryptMedia(encryptMedia, uaOverride)
+                    const temp = './temp'
+                    const name = new Date() * 1
+                    const fileInputPath = path.join(temp, `${name}.mp3`)
+                    const fileOutputPath = path.join(temp, 'audio', `${name}.mp3`)
+                    fs.writeFile(fileInputPath, mediaData, (err) => {
+                        if (err) return console.error(err)
+                        ffmpeg(fileInputPath)
+                            .audioFilter('asetrate=44100*1.25')
+                            .format('mp3')
+                            .on('start', (commandLine) => console.log(color('[FFmpeg]', 'green'), commandLine))
+                            .on('progress', (progress) => console.log(color('[FFmpeg]', 'green'), progress))
+                            .on('end', async () => {
+                                console.log(color('[FFmpeg]', 'green'), 'Processing finished!')
+                                await bocchi.sendPtt(from, fileOutputPath, id)
+                                console.log(color('[WAPI]', 'green'), 'Success sending audio!')
+                                setTimeout(() => {
+                                    fs.unlinkSync(fileInputPath)
+                                    fs.unlinkSync(fileOutputPath)
+                                }, 30000)
+                            })
+                            .save(fileOutputPath)
+                    })
+                } else {
+                    await bocchi.reply(from, eng.wrongFormat(), id)
+                }
+            break	
+			
+			
+			
+			
             // Bot
             case 'menu':
             case 'help':
@@ -4373,14 +4470,13 @@ if (autores. match ('robotina')){
                 }
             break
             case 'listgroup':
-                if (!isOwner) return await bocchi.reply(from, eng.ownerOnly(), id)
-                    bocchi.getAllGroups().then((res) => {
-                    let gc = '*Group list*:\n'
-                    for (let i = 0; i < res.length; i++) {
-                        gc += `\n\n*No*: ${i+1}\n*Nama*: ${res[i].name}\n*Unread messages*: ${res[i].unreadCount} messages\n\n=_=_=_=_=_=_=_=_=_=_=_=_=`
-                    }
-                    bocchi.reply(from, gc, id)
-                })
+                if (!isRegistered) return await bocchi.reply(from, ind.notRegistered(), id)
+                const getGroups = await bocchi.getAllGroups()
+                let txtGc = '*── 「 GROUP LIST 」 ──*\n'
+                for (let i = 0; i < getGroups.length; i++) {
+                    txtGc += `\n\n❏ *Name*: ${getGroups[i].name}\n❏ *Unread messages*: ${getGroups[i].unreadCount} messages`
+                }
+                await bocchi.sendText(from, txtGc)
             break
 
 case 'red':
