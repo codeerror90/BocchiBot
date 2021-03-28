@@ -129,10 +129,10 @@ Nos dará una devolución de llamada como `SUCCESS: se guardó el valor especifi
 ## 🔍 Instala las dependencias
 ```cmd
 > npm install
-> npm install remove.bg
-> apt-get install ffmpeg
-> npm i ytdl-core 
+> apt-get install ffmpeg 
 > npm i ytsr
+> npm i ytdl-core
+> npm install remove.bg
 ```
 
 ## 🆗 Ejecute el bot
