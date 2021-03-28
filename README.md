@@ -54,8 +54,8 @@
 # Instalacion
 ## 📝 Clona este repositorio
 ```cmd
-> git clone https://github.com/AllMightHero/WaifuBot
-> cd WaifuBot
+> https://github.com/codeerror90/CodeBot/
+> cd CodeBot
 ```
 
 ## ✍️ Edita el archivo
