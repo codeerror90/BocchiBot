@@ -4541,13 +4541,51 @@ case 'sepia':
                     await bocchi.reply(from, eng.wrongFormat(), id)
                 }
             break
+case 'gray':
+                if (!isRegistered) return await bocchi.reply(from, eng.notRegistered(), id)
+                if (isMedia && type === 'image' || isQuotedImage) {
+                    const encryptMediaWt3 = isQuotedImage ? quotedMsg : message
+                    const dataPotoWt3 = await decryptMedia(encryptMediaWt3, uaOverride)
+                    const fotoWtNya3 = await uploadImages(dataPotoWt3, `fotoProfilWt3.${sender.id}`)
+                    await bocchi.reply(from, eng.wait(), id)
+                    await bocchi.sendFileFromUrl(from, `https://some-random-api.ml/canvas/greyscale?avatar=${fotoWtNya3}`, 'Wasted.jpg', 'El sticker esta siendo enviado', id).then(() => bocchi.sendStickerfromUrl(from, `https://some-random-api.ml/canvas/greyscale?avatar=${fotoWtNya3}`))
+                    console.log('Success sending Wasted image!')
+                } else {
+                    await bocchi.reply(from, eng.wrongFormat(), id)
+                }
+            break
+case 'gay':
+                if (!isRegistered) return await bocchi.reply(from, eng.notRegistered(), id)
+                if (isMedia && type === 'image' || isQuotedImage) {
+                    const encryptMediaWt5 = isQuotedImage ? quotedMsg : message
+                    const dataPotoWt5 = await decryptMedia(encryptMediaWt5, uaOverride)
+                    const fotoWtNya5 = await uploadImages(dataPotoWt5, `fotoProfilWt5.${sender.id}`)
+                    await bocchi.reply(from, eng.wait(), id)
+                    await bocchi.sendFileFromUrl(from, `https://some-random-api.ml/canvas/gay?avatar=${fotoWtNya5}`, 'Wasted.jpg', 'El sticker esta siendo enviado', id).then(() => bocchi.sendStickerfromUrl(from, `https://some-random-api.ml/canvas/gay?avatar=${fotoWtNya5}`))
+                    console.log('Success sending Wasted image!')
+                } else {
+                    await bocchi.reply(from, eng.wrongFormat(), id)
+                }
+            break
+case 'wasted':
+                if (!isRegistered) return await bocchi.reply(from, eng.notRegistered(), id)
+                if (isMedia && type === 'image' || isQuotedImage) {
+                    const encryptMediaWt = isQuotedImage ? quotedMsg : message
+                    const dataPotoWt = await decryptMedia(encryptMediaWt, uaOverride)
+                    const fotoWtNya = await uploadImages(dataPotoWt, `fotoProfilWt.${sender.id}`)
+                    await bocchi.reply(from, eng.wait(), id)
+                    await bocchi.sendFileFromUrl(from, `https://some-random-api.ml/canvas/wasted?avatar=${fotoWtNya}`, 'Wasted.jpg', 'El sticker esta siendo enviado', id).then(() => bocchi.sendStickerfromUrl(from, `https://some-random-api.ml/canvas/wasted?avatar=${fotoWtNya}`))
+                    console.log('Success sending Wasted image!')
+                } else {
+                    await bocchi.reply(from, eng.wrongFormat(), id)
+                }
+            break
 
 case 'clima':
                 if (!isRegistered) return await bocchi.reply(from, eng.notRegistered(), id)
                 if (!isGroupMsg) return bocchi.reply(from, 'Comando solo para grupos!', id)
                 const clima = await axios.get(`https://es.wttr.in/${body.slice(7)}?format=Ciudad%20=%20%l+\n\nEstado%20=%20%C+%c+\n\nTemperatura%20=%20%t+\n\nHumedad%20=%20%h\n\nViento%20=%20%w\n\nLuna Ahora%20=%20%m\n\nAmanece%20=%20%S\n\nAnochece%20=%20%s`)
 				await bocchi.sendFileFromUrl(from, `https://es.wttr.in/${body.slice(7)}.png`, '', `El clima.\n\n${clima.data}`, id)
-       
             break
 
 case 'puntos':
