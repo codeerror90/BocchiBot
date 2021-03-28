@@ -3079,6 +3079,29 @@ if (autores. match ('robotina')){
                     await bocchi.reply(from, 'Error!', id)
                 }
             break
+		case 'patear':
+            if (!isRegistered) return await bocchi.reply(from, eng.notRegistered(), id)
+            arq = body.trim().split(' ')
+            const person6 = pushname.replace('@c.us', '')
+            await bocchi.sendStickerfromUrl(from, 'https://raw.githubusercontent.com/AllMightHero/Acciones/main/patada.gif')
+            bocchi.sendTextWithMentions(from, `@${sender.id.replace('@c.us', '')}`+' *Le da una patada a* ' + arq[1])
+            break
+            case 'besar':
+            if (!isRegistered) return await bocchi.reply(from, eng.notRegistered(), id)
+            arq = body.trim().split(' ')
+            const person7 = pushname.replace('@c.us', '')
+            await bocchi.sendStickerfromUrl(from, 'https://raw.githubusercontent.com/AllMightHero/Acciones/main/beso.gif')
+            bocchi.sendTextWithMentions(from, `@${sender.id.replace('@c.us', '')}`+' *Le da un beso a* ' + arq[1])
+            break
+            case 'golpear':
+            if (!isRegistered) return await bocchi.reply(from, eng.notRegistered(), id)
+            arq = body.trim().split(' ')
+            const person5 = pushname.replace('@c.us', '')
+            await bocchi.sendStickerfromUrl(from, 'https://raw.githubusercontent.com/AllMightHero/Acciones/main/golpe.gif')
+            bocchi.sendPtt(from, './audios/smash.mp3', id)
+            bocchi.sendTextWithMentions(from, `@${sender.id.replace('@c.us', '')}`+' *golpea a* ' + arq[1])
+            break	
+			
             case 'phcomment':
                 if (!isRegistered) return await bocchi.reply(from, eng.notRegistered(), id)
                 if (!q.includes('|')) return await bocchi.reply(from, eng.wrongFormat(), id)
