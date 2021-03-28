@@ -1226,6 +1226,16 @@ Cambia el nombre del bot. Máximo 25 caracteres.
 Aliases: -
 Usage: *${prefix}name* username
 
+14. *${prefix}block*
+Blockear Usuario.
+Aliases: *blok*
+Usage: *${prefix}block* @user/62812xxxxxxxx
+
+15. *${prefix}unblock*
+Desbloquear Usuario.
+Aliases: *unblok*
+Usage: *${prefix}unblock* @user/62812xxxxxxxx
+
 _Index of [9]_
     `
 }
