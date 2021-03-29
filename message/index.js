@@ -1996,7 +1996,7 @@ if (autores. match ('robotina')){
                 if (!isRegistered) return await bocchi.reply(from, eng.notRegistered(), id)
                 await bocchi.sendContact(from, ownerNumber)
             break
-            case 'runtime': // BY HAFIZH
+            case 'uptime': // BY HAFIZH
                 if (!isRegistered) return await bocchi.reply(from, eng.notRegistered(), id)
                 const formater = (seconds) => {
                     const pad = (s) => {
