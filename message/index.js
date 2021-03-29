@@ -3098,21 +3098,21 @@ if (autores. match ('robotina')){
             if (!isRegistered) return await bocchi.reply(from, eng.notRegistered(), id)
             arq = body.trim().split(' ')
             const person6 = pushname.replace('@c.us', '')
-            await bocchi.sendStickerfromUrl(from, 'https://raw.githubusercontent.com/AllMightHero/Acciones/main/patada.gif')
+            await bocchi.sendStickerfromUrl(from, 'https://media.giphy.com/media/0MVwm1nTsUOwigXssP/source.gif')
             bocchi.sendTextWithMentions(from, `@${sender.id.replace('@c.us', '')}`+' *Le da una patada a* ' + arq[1])
             break
             case 'besar':
             if (!isRegistered) return await bocchi.reply(from, eng.notRegistered(), id)
             arq = body.trim().split(' ')
             const person7 = pushname.replace('@c.us', '')
-            await bocchi.sendStickerfromUrl(from, 'https://raw.githubusercontent.com/AllMightHero/Acciones/main/beso.gif')
+            await bocchi.sendStickerfromUrl(from, 'https://media.giphy.com/media/kGL5fBSGDmjEXxjAGf/source.gif')
             bocchi.sendTextWithMentions(from, `@${sender.id.replace('@c.us', '')}`+' *Le da un beso a* ' + arq[1])
             break
             case 'golpear':
             if (!isRegistered) return await bocchi.reply(from, eng.notRegistered(), id)
             arq = body.trim().split(' ')
             const person5 = pushname.replace('@c.us', '')
-            await bocchi.sendStickerfromUrl(from, 'https://raw.githubusercontent.com/AllMightHero/Acciones/main/golpe.gif')
+            await bocchi.sendStickerfromUrl(from, 'https://media.giphy.com/media/S5NmO0wK4E0KYDxOW4/source.gif')
             bocchi.sendPtt(from, './audios/smash.mp3', id)
             bocchi.sendTextWithMentions(from, `@${sender.id.replace('@c.us', '')}`+' *golpea a* ' + arq[1])
             break	
