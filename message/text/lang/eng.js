@@ -689,7 +689,7 @@ Convertir sticker en imagen.
 Aliases: *stikertoimg*
 Usage: Responde a los stickers con la leyenda *${prefix}toimg*.
 
-9. *${prefix} triggered*
+17. *${prefix} triggered*
 Crea un sticker gif a partir de una imagen con un efecto y leyenda triggered.
 Aliases: -
 Usage: Envia una imagen con el texto *${prefix}triggered* o responde a una imagen con el texto *${prefix}triggered*.
