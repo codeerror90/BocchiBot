@@ -4336,34 +4336,34 @@ if (autores. match ('robotina')){
             // Owner command
 	    case 'block':
             case 'blok':
-                if (!isOwner) return await bocchi.reply(from, ind.ownerOnly(), id)
+                if (!isOwner) return await bocchi.reply(from, eng.ownerOnly(), id)
                 if (mentionedJidList.length !== 0) {
                     for (let blok of mentionedJidList) {
-                        if (blok === botNumber) return await bocchi.reply(from, ind.wrongFormat(), id)
+                        if (blok === botNumber) return await bocchi.reply(from, eng.wrongFormat(), id)
                         await bocchi.contactBlock(blok)
                     }
-                    await bocchi.reply(from, ind.doneOwner(), id)
+                    await bocchi.reply(from, eng.doneOwner(), id)
                 } else if (args.length === 1) {
                     await bocchi.contactBlock(args[0] + '@c.us')
-                    await bocchi.reply(from, ind.doneOwner(), id)
+                    await bocchi.reply(from, eng.doneOwner(), id)
                 } else {
-                    await bocchi.reply(from, ind.wrongFormat(), id)
+                    await bocchi.reply(from, eng.wrongFormat(), id)
                 }
             break
             case 'unblock':
             case 'unblok':
-                if (!isOwner) return await bocchi.reply(from, ind.ownerOnly(), id)
+                if (!isOwner) return await bocchi.reply(from, eng.ownerOnly(), id)
                 if (mentionedJidList.length !== 0) {
                     for (let blok of mentionedJidList) {
-                        if (blok === botNumber) return await bocchi.reply(from, ind.wrongFormat(), id)
+                        if (blok === botNumber) return await bocchi.reply(from, eng.wrongFormat(), id)
                         await bocchi.contactUnblock(blok)
                     }
-                    await bocchi.reply(from, ind.doneOwner(), id)
+                    await bocchi.reply(from, eng.doneOwner(), id)
                 } else if (args.length === 1) {
                     await bocchi.contactUnblock(args[0] + '@c.us')
-                    await bocchi.reply(from, ind.doneOwner(), id)
+                    await bocchi.reply(from, eng.doneOwner(), id)
                 } else {
-                    await bocchi.reply(from, ind.wrongFormat(), id)
+                    await bocchi.reply(from, eng.wrongFormat(), id)
                 }
             break	
 			
