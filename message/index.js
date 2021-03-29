@@ -1546,6 +1546,19 @@ if (autores. match ('robotina')){
                         await bocchi.reply(from, 'Error!', id)
                     })
             break
+		case 'frasedehoy':
+            fetch('https://raw.githubusercontent.com/codeerror90/Extras/main/motivasi.txt')
+            .then(res => res.text())
+            .then(body => {
+                let splitmotivasi = body.split('\n')
+                let randommotivasi = splitmotivasi[Math.floor(Math.random() * splitmotivasi.length)]
+                bocchi.reply(from, randommotivasi, id)
+            })
+            .catch(() => {
+                bocchi.reply(from, 'Error!', id)
+            })
+            break	
+			
             case 'play':
                 if (!isRegistered) return await bocchi.reply(from, eng.notRegistered(), id)
                 if (!q) return await bocchi.reply(from, eng.wrongFormat(), id)
