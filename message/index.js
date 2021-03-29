@@ -5296,7 +5296,7 @@ case 'musica':
                 let info = await ytdl.getInfo(viidio);
                 let format = ytdl.chooseFormat(info.formats, { quality: '18' });
                 //console.log('Format found!', format)
-                if (format.contentLength >= 450000000) {
+                if (format.contentLength >= 45000000) {
                         return bocchi.reply(from, `Lo siento el limite de video es de 45MB. ✋😥`, id)
                     } else {
                 await bocchi.sendFileFromUrl(from, format.url, `${videoDatas.title}.mp4`, '    *⺀ YOUTUBE MP4 ⺀* 🥷🏻‼️\n\n*○ Título:*  '+ `${videoDatas.title}` +'\n\n*○ Subido Por:*  ' + `${videoDatas.author.name}` + '\n\n*○ Formato Del Archivo:*  MPEG-4 parte 14' + '\n\n*○ Publicado:*  ' + `${videoDatas.uploadedAt.replace('years ago','Años atrás')}` +'\n\n*○ Enlace Directo:*  ' + `${videoDatas.url}` + '\n\n*▌│█║▌║▌║║▌║▌║█│▌▌│*')
