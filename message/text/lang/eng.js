@@ -583,19 +583,23 @@ Usage: *${prefix}coronavirus* nombre_nacion
 10. *${prefix} imagen*
 Busca una Imagen.
 Aliases: -
-UsageL *${prefix}imagen* imagen a buscar
+Usage: *${prefix}imagen* imagen a buscar
 
 11. *${prefix}nightcore*
 Crea un efecto nightcore a partir del audio transmitido.
-Aliases: Responder Audio con *${prefix}nightcore*.
+Usage: Responder Audio con *${prefix}nightcore*.
 
 12. *${prefix}toptt*
 Envia una nota de voz a partir de un mp3.
-Aliases: Responder Audio con *${prefix}toptt*.
+Usage: Responder Audio con *${prefix}toptt*.
 
 13. *${prefix}clima*
 Conoce el clima de tu ciudas.
-Aliases: Envia *${prefix}clima* y tu ciudad.
+Usage: Envia *${prefix}clima* y tu ciudad.
+
+13. *${prefix}frasedehoy*
+Frases Motivasionaels aleatorias
+Usage: Envia *${prefix}frasedehoy*.
 
 _Index of [3]_
     `
@@ -615,52 +619,52 @@ Crea stickers a partir de videos / GIF.
 Aliases: *stikergif*
 Usage: Enviar videos / GIF con subtítulo *${prefix}gif* o responde a los videos / GIF con la leyenda *${prefix}gif*.
 
-3. *${prefix} frasestick*
+3. *${prefix}frasestick*
 Texto a sticker.
 Aliases: -
 UsageL *${prefix}frasestick* texto/frase
 
-4. *${prefix} robado*
+4. *${prefix}robado*
 Roba/Renombra los Stickers (nombre | autor.
 Aliases: -
 Usage: *${prefix}robado* nombre | autor
 
-5. *${prefix} wasted*
+5. *${prefix}wasted*
 Crea un efecto Wasted como GTA.
 Aliases: -
 Usage: Envia una imagen con el texto *${prefix}wasted* o responde a una imagen con el texto *${prefix}wasted*.
 
-6. *${prefix} red*
+6. *${prefix}red*
 Crea una imagen y un sticker con un efecto rojo.
 Aliases: -
 Usage: Envia una imagen con el texto *${prefix}red* o responde a una imagen con el texto *${prefix}red*.
 
-7. *${prefix} sepia*
+7. *${prefix}sepia*
 Crea una imagen y un sticker con un efecto sepia.
 Aliases: -
 Usage: Envia una imagen con el texto *${prefix}sepia* o responde a una imagen con el texto *${prefix}sepia*.
 
-8. *${prefix} gray*
+8. *${prefix}gray*
 Crea una imagen y un sticker con un efecto blanco y negro.
 Aliases: -
 Usage: Envia una imagen con el texto *${prefix}gray* o responde a una imagen con el texto *${prefix}gray*.
 
-9. *${prefix} gay*
+9. *${prefix}gay*
 Crea una imagen y un sticker con un efecto de la bandera de colores.
 Aliases: -
 Usage: Envia una imagen con el texto *${prefix}gay* o responde a una imagen con el texto *${prefix}gay*.
 
-10. *${prefix} nobg*
+10. *${prefix}nobg*
 Elimina el fondo de una imagen y creala sticker (solo premium).
 Aliases: -
 Usage: Envia una imagen con el texto *${prefix}nobg*.
 
-11. *${prefix} emoji*
+11. *${prefix}emoji*
 Crea un sticker de un emoji.
 Aliases: -
 Usage: Envie el comando *${prefix}emoji* y el emoji que quiere hacer sticker.
 
-12. *${prefix} colores*
+12. *${prefix}colores*
 Crea un sticker de texto o emojis con colores.
 Aliases: -
 Usage: Envie el comando *${prefix}colores* y el texto o emoji que quiere hacer sticker.
@@ -869,6 +873,11 @@ Usage: *${prefix}groupinfo*.
 Muestra ek link de tu Wa.me
 Aliases: -
 Usage: *${prefix}wame*.
+
+14. *${prefix}afk*
+Avisa al grupo si estas ausente y por que razón
+Aliases: -
+Usage: *${prefix}afk* Razón ejemplo: $afk trabajando.
 
 _Index of [7]_
     `
