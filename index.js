@@ -100,7 +100,7 @@ const start = (bocchi = new Client()) => {
                     .setBackground('https://www.photohdx.com/images/2016/05/red-blurry-background.jpg')
                     .toAttachment()
                 const base64 = `data:image/png;base64,${welcomer.toBuffer().toString('base64')}`
-                await bocchi.sendFile(event.chat, base64, 'welcome.png', `Hola @${event.who.replace('@c.us','')} ?? ! \n\nY bienvenido a ${name} \n\nQueremos que te diviertas y obviamente sigas nuestras reglas.!\n\n*Permitenos conocerte y presentate con Tu nombre, Foto, Edad y de donde eres* \n\nSi es necesario, llame a un administrador o escriba ${config.prefix}menu.`)
+                await bocchi.sendFile(event.chat, base64, 'welcome.png', `Hola @${event.who.replace('@c.us','')} \n\nY bienvenido a ${name} \n\nQueremos que te diviertas y obviamente sigas nuestras reglas.!\n\n*Permitenos conocerte y presentate con Tu nombre, Foto, Edad y de donde eres* \n\nSi es necesario, llame a un administrador o escriba $menu.`)
             } else if (event.action === 'remove' && event.who !== botNumbers && isWelcome) {
                 const pic = await bocchi.getProfilePicFromServer(event.who)
                 if (pic === undefined) {
