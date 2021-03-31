@@ -69,6 +69,8 @@ const cd = 4.32e+7
 const limitCount = 550
 const errorImg = 'https://i.ibb.co/jRCpLfn/user.png'
 const tanggal = moment.tz('America/Mexico_City').format('DD-MM-YYYY')
+const { warnss } = require('../function')
+const warnCount = 1
 /********** END OF UTILS **********/
 
 /********** DATABASES **********/
@@ -91,6 +93,7 @@ const _stick = JSON.parse(fs.readFileSync('./database/bot/sticker.json'))
 const _setting = JSON.parse(fs.readFileSync('./database/bot/setting.json'))
 let { memberLimit, groupLimit } = _setting
 const slce = JSON.parse(fs.readFileSync('./database/group/silence.json'))
+const _warn = JSON.parse(fs.readFileSync('./database/group/warn.json'))
 /********** END OF DATABASES **********/
 
 /********** MESSAGE HANDLER **********/
@@ -212,7 +215,7 @@ const double = Math.floor(Math.random() * 2) + 1
             role = 'Platinum II'
         } else if (levelRole >= 95) {
             role = 'Platinum I'
-        } else if (levelRole >= 100) {
+        } else if (levelRole > 100) {
             role = 'Exterminator'
         }
         
@@ -274,12 +277,6 @@ const double = Math.floor(Math.random() * 2) + 1
                 bocchi.sendPtt(from, './noches.mp3', id)
         }
         
-   //     if (isGroupMsg && isBotGroupAdmins && !isGroupAdmins) {      
-	   //     if (chats.length > 5000) {
-       //     await bocchi.sendTextWithMentions(from, `🔰 @${sender.id} \n\n • Este grupo esta protegido contra excesos de texto`)
-    //      await bocchi.removeParticipant(groupId, sender.id)
-//        }
- //       }
 
         // Anti-group link detector
         if (isGroupMsg && !isGroupAdmins && isBotGroupAdmins && isDetectorOn && !isOwner) {
@@ -294,6 +291,8 @@ const double = Math.floor(Math.random() * 2) + 1
                 }
             }
         }
+	    
+	 
 
         // Simple anti virtext, sorted by chat length, by: VideFrelan
         if (isGroupMsg && !isGroupAdmins && isBotGroupAdmins && !isOwner) {
@@ -312,7 +311,7 @@ const double = Math.floor(Math.random() * 2) + 1
 	    
         // Anti-fake-group link detector
         if (isGroupMsg && !isGroupAdmins && isBotGroupAdmins && isDetectorOn && !isOwner) {
-            if (chats.match(new RegExp(/(https:\/\/chat.(?!whatsapp.com))/gi))) {
+            if (chats. match(new RegExp(/(https:\/\/chat.(?!whatsapp.com))/gi))) {
                 console.log(color('[KICK]', 'red'), color('Received a fake group link.', 'yellow'))
                 await bocchi.reply(from, 'Ow, este enlace parece un poco sospechoso, por la seguridad de los miembros de este grupo, te patearé.\nBye~.', id)
                 await bocchi.removeParticipant(groupId, sender.id)
@@ -4345,7 +4344,28 @@ if (autores. match ('robotina')){
                     await bocchi.reply(from, eng.wrongFormat(), id)
                 }
             break
-
+            case 'advertir' :
+        if (!isGroupMsg) return await bocchi.reply(from, eng.groupOnly(), id)
+        if (isGroupMsg && isGroupAdmins || isGroupMsg && isOwner) {
+        if (!isGroupAdmins) return await bocchi.reply(from, eng.adminOnly(), id)
+        if (!isBotGroupAdmins) return await bocchi.reply(from, eng.botNotAdmin(), id)
+        if (quotedMsg) {
+            const war = quotedMsgObj.sender.id
+            const warss = warnss.getwarns(war, _warn, warnCount)
+            if (Number(warss) >= 3) {
+                bocchi.sendTextWithMentions(from, `    *⺀ EXPULSIÓN ⺀* ❌‼️\n\nEl usuario *@${war}* ha llego a su ultima advertencia, por lo cual será eliminado del grupo.`) 
+                await bocchi.removeParticipant(groupId, war)
+                warnss.resetwarn(war, _warn)
+            } else {
+            warnss.addwarn(war, _warn)
+            bocchi.sendTextWithMentions(from, `    *⺀ ADVERTENCIA ⺀* ⚠️‼️\n\nEl usuario *@${war}* Ha sido advertido.\n\n*○ ${warss}/3*\n\n*Si tus advertencias llegan a 3 serás expulsado del grupo.*`)
+            }  
+        }}
+    break 
+			
+			
+			
+			
             // Owner command
 	    case 'block':
             case 'blok':
@@ -4379,7 +4399,17 @@ if (autores. match ('robotina')){
                     await bocchi.reply(from, eng.wrongFormat(), id)
                 }
             break	
-			
+		
+		 case 'bcgroup':
+            if (!isOwner) return await bocchi.reply(from, eng.ownerOnly(), id)
+            let msgi = body.slice(9)
+            const chatg = await bocchi.getAllGroups()
+            for (let idg of chatg) {
+                var cpk = await bocchi.getChatById(idg)
+                if (!cpk.isReadOnly) await bocchi.sendText(idg.contact.id, `[ MENSAJE GENERAL]\n\n${msgi}`)
+            }
+            bocchi.reply(from, 'Transmision General Enviada!', id)
+            break	
             case 'bc':
                 if (!isOwner) return await bocchi.reply(from, eng.ownerOnly(), id)
                 if (!q) return await bocchi.reply(from, eng.emptyMess(), id)
