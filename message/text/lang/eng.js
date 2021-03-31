@@ -789,92 +789,97 @@ Eliminar miembros del grupo.
 Aliases: -
 Usage: *${prefix}kick* @member1
 
-3. *${prefix}promote*
+3. *${prefix}advertir*
+Asigna advertencias a los usuarios, si acumula 3 advertencias serán expulsados. 
+Otros usos: - 
+Uso: *${prefix}advertencia* responda a un mensaje de la persona que desea advertir. 
+
+4. *${prefix}promote*
 Promocionar miembro para que se convierta en administrador.
 Aliases: -
 Usage: *${prefix}promote* @member1
 
-4. *${prefix}demote*
+5. *${prefix}demote*
 Descender miembro de administrador.
 Aliases: -
 Usage: *${prefix}demote* @member1
 
-5. *${prefix}leave*
+6. *${prefix}leave*
 Sacat el bot del grupo.
 Aliases: -
 Usage: *${prefix}leave*
 
-6. *${prefix}everyone*
+7. *${prefix}everyone*
 Mencione a todos los miembros del grupo.
 Aliases: -
 Usage: *${prefix}everyone*
 
-7. *${prefix}nsfw*
+8. *${prefix}nsfw*
 Activar/desactivar el modo NSFW (18+).
 Aliases: -
 Usage: *${prefix}nsfw* enable/disable
 
-8. *${prefix}groupicon*
+9. *${prefix}groupicon*
 Cambiar icono de grupo.
 Aliases: -
 Usage: Enviar imágenes con subtítulo *${prefix}groupicon* o responde a las imágenes con una leyenda *${prefix}groupicon*.
 
-9. *${prefix}antilink*
+10. *${prefix}antilink*
 Activar/Desactivar la función de proteccion de enlace de grupo de Whatsapp.
 Aliases: -
 Usage: *${prefix}antilink* enable/disable
 
-10. *${prefix}welcome*
+11. *${prefix}welcome*
 Activar/Desactivar la función de bienvenida.
 Aliases: -
 Usage: *${prefix}welcome* enable/disable
 
-11. *${prefix}autosticker*
+12. *${prefix}autosticker*
 Alternar la función de autoadhesivo. Cada imagen enviada se convertirá en un Sticker.
 Aliases: *autostiker autostik*
 Usage: *${prefix}autostiker* enable/disable
 
-12. *${prefix}antinsfw*
+13. *${prefix}antinsfw*
 Activar/Desactivar proteccion de enlace anti-NSFW.
 Aliases: -
 Usage: *${prefix}antinsfw* enable/disable
 
-13. *${prefix}mutegc*
+14. *${prefix}mutegc*
 Configure el grupo para que solo administradores envien mensajes.
 Aliases: -
 Usage: *${prefix}mutegc* enable/disable
 
-13. *${prefix}revoke*
+15. *${prefix}revoke*
 Restablecer el enlace del grupo.
 Aliases: -
 Usage: *${prefix}revoke*.
 
-13. *${prefix}linkgroup*
+16. *${prefix}linkgroup*
 Envia el enlace del grupo
 Aliases: -
 Usage: *${prefix}linkgroup*.
 
-13. *${prefix}ownergroup*
+17. *${prefix}ownergroup*
 Muestra quien creo el grupo.
 Aliases: -
 Usage: *${prefix}ownergroup*.
 
-13. *${prefix}admins*
+18. *${prefix}admins*
 Muestra a los administradores del grupo.
 Aliases: -
 Usage: *${prefix}admins*.
 
-13. *${prefix}groupinfo*
+19. *${prefix}groupinfo*
 Muestra la informacion del grupo.
 Aliases: -
 Usage: *${prefix}groupinfo*.
 
-13. *${prefix}wame*
+20. *${prefix}wame*
 Muestra ek link de tu Wa.me
 Aliases: -
 Usage: *${prefix}wame*.
 
-14. *${prefix}afk*
+21. *${prefix}afk*
 Avisa al grupo si estas ausente y por que razón
 Aliases: -
 Usage: *${prefix}afk* Razón ejemplo: $afk trabajando.
@@ -957,76 +962,81 @@ exports.menuOwner = () => {
 Hola propietarioヽ(・∀・)ﾉ!
 
 1. *${prefix}bc*
-Haz un mensaje genera para todos los grupos.
+Haz un mensaje genera para todos los chats del bot.
 Aliases: -
 Usage: *${prefix}bc* text
 
-2. *${prefix}clearall*
+2. *${prefix}bcgroup*
+Haz una mensaje solo para los grupos del bot.
+Otros usos: -
+Uso: *${prefix}bcgroup* texto. 
+
+3. *${prefix}clearall*
 Elimina todos los chats de la cuenta del bot.
 Aliases: -
 Usage: *${prefix}clearall*
 
-3. *${prefix}getses*
+4. *${prefix}getses*
 Tome una captura de pantalla de la sesión desde la cuenta del bot.
 Aliases: -
 Usage: *${prefix}getses*
 
-4. *${prefix}ban*
+5. *${prefix}ban*
 Agregar / eliminar usuarios prohibidos.
 Aliases: -
 Usage: *${prefix}ban* add/del @user/62812xxxxxxxx
 
-5. *${prefix}leaveall*
+6. *${prefix}leaveall*
 Sal de todos los grupos.
 Aliases: -
 Usage: *${prefix}leaveall*
 
-6. *${prefix}eval*
+7. *${prefix}eval*
 Evalúe el código JavaScript.
 Aliases: *ev*
 Usage: *${prefix}eval*
 
-7. *${prefix}shutdown*
+8. *${prefix}shutdown*
 Apagar bot.
 Aliases: -
 Usage: *${prefix}shutdown*
 
-8. *${prefix}premium*
+9. *${prefix}premium*
 Agregar / eliminar usuarios premium.
 Aliases: -
 Usage: *${prefix}premium* add/del @user
 
-9. *${prefix}setstatus*
+10. *${prefix}setstatus*
 Pone cosas sobre mí.
 Aliases: *setstatus setstat*
 Usage: *${prefix}status* text
 
-10. *${prefix}serial*
+11. *${prefix}serial*
 Verifique el número de serie del usuario.
 Aliases: -
 Usage: *${prefix}serial* user_serial
 
-11. *${prefix}exif*
+12. *${prefix}exif*
 Ajusta tus stickers WM.
 Aliases: -
 Usage: *${prefix}exif* pack_name | author_name
 
-12. *${prefix}mute*
+13. *${prefix}mute*
 Silencia a todos los usuarios.
 Aliases: -
 Usage: Use *${prefix}mute* to mute and use *${prefix}mute* once again to unmute.
 
-13. *${prefix}setname*
+14. *${prefix}setname*
 Cambia el nombre del bot. Máximo 25 caracteres.
 Aliases: -
 Usage: *${prefix}name* username
 
-14. *${prefix}block*
+15. *${prefix}block*
 Blockear Usuario.
 Aliases: *blok*
 Usage: *${prefix}block* @user/62812xxxxxxxx
 
-15. *${prefix}unblock*
+16. *${prefix}unblock*
 Desbloquear Usuario.
 Aliases: *unblok*
 Usage: *${prefix}unblock* @user/62812xxxxxxxx
