@@ -177,45 +177,45 @@ const double = Math.floor(Math.random() * 2) + 1
         // ROLE (Change to what you want, or add) and you can change the role sort based on XP.
         const levelRole = level.getLevelingLevel(sender.id, _level)
         var role = 'Copper V'
-        if (levelRole >= 5) {
+        if (levelRole <=5 ) {
             role = 'Copper IV'
-        } else if (levelRole >= 10) {
+        } else if (levelRole <= 10) {
             role = 'Copper III'
-        } else if (levelRole >= 15) {
+        } else if (levelRole <= 15) {
             role = 'Copper II'
-        } else if (levelRole >= 20) {
+        } else if (levelRole <= 20) {
             role = 'Copper I'
-        } else if (levelRole >= 25) {
+        } else if (levelRole <= 25) {
             role = 'Silver V'
-        } else if (levelRole >= 30) {
+        } else if (levelRole <= 30) {
             role = 'Silver IV'
-        } else if (levelRole >= 35) {
+        } else if (levelRole <= 35) {
             role = 'Silver III'
-        } else if (levelRole >= 40) {
+        } else if (levelRole <= 40) {
             role = 'Silver II'
-        } else if (levelRole >= 45) {
+        } else if (levelRole <= 45) {
             role = 'Silver I'
-        } else if (levelRole >= 50) {
+        } else if (levelRole <= 50) {
             role = 'Gold V'
-        } else if (levelRole >= 55) {
+        } else if (levelRole <= 55) {
             role = 'Gold IV'
-        } else if (levelRole >= 60) {
+        } else if (levelRole <= 60) {
             role = 'Gold III'
-        } else if (levelRole >= 65) {
+        } else if (levelRole <= 65) {
             role = 'Gold II'
-        } else if (levelRole >= 70) {
+        } else if (levelRole <= 70) {
             role = 'Gold I'
-        } else if (levelRole >= 75) {
+        } else if (levelRole <= 75) {
             role = 'Platinum V'
-        } else if (levelRole >= 80) {
+        } else if (levelRole <= 80) {
             role = 'Platinum IV'
-        } else if (levelRole >= 85) {
+        } else if (levelRole <= 85) {
             role = 'Platinum III'
-        } else if (levelRole >= 90) {
+        } else if (levelRole <= 90) {
             role = 'Platinum II'
-        } else if (levelRole >= 95) {
+        } else if (levelRole <= 95) {
             role = 'Platinum I'
-        } else if (levelRole > 100) {
+        } else if (levelRole <= 100) {
             role = 'Exterminator'
         }
         
@@ -233,48 +233,11 @@ const double = Math.floor(Math.random() * 2) + 1
                     level.addLevelingLevel(sender.id, 1, _level)
                     const userLevel = level.getLevelingLevel(sender.id, _level)
                     const fetchXp = 5 * Math.pow(userLevel, 2) + 50 * userLevel + 100
-                    await bocchi.reply(from, `*「 LEVEL UP 」*\n\n➸ *Name*: ${pushname}\n➸ *XP*: ${level.getLevelingXp(sender.id, _level)} / ${fetchXp}\n➸ *Level*: ${currentLevel} -> ${level.getLevelingLevel(sender.id, _level)} 🆙 \n➸ *Role*: *${role}*\n\nCongrats!! 🎉🎉`, id)
+                    await bocchi.reply(from, `*「 LEVEL UP 」*\n\n➸ *Nombre*: ${pushname}\n➸ *XP*: ${level.getLevelingXp(sender.id, _level)} / ${fetchXp}\n➸ *Nivel*: ${currentLevel} -> ${level.getLevelingLevel(sender.id, _level)} 🆙 \n➸ *Rango*: *${role}*\n\nFelicidades!! 🎉🎉`, id)
                 }
             } catch (err) {
                 console.error(err)
             }
-        }
-
-        
-           // Fix By Orumaito
-        if (chats == '.dias grupo') {
-        if (!isOwner) return await bocchi.reply(from, eng.ownerOnly(), id)
-                bocchi.sendPtt(from, './buenosdias.mp3', id)
-        }
-         // Fix By Orumaito
-        if (chats == '.alerta') {
-        if (!isOwner) return await bocchi.reply(from, eng.ownerOnly(), id)
-                bocchi.sendPtt(from, './alerta.mp3', id)
-        }
-         // Fix By Orumaito
-        if (chats == '.hola bebe') {
-        if (!isOwner) return await bocchi.reply(from, eng.ownerOnly(), id)
-                bocchi.sendPtt(from, './bebe.mp3', id)
-        }
-                 // Fix By Orumaito
-        if (chats == '.diablos señorita') {
-        if (!isOwner) return await bocchi.reply(from, eng.ownerOnly(), id)
-                bocchi.sendPtt(from, './diablos.mp3', id)
-        }
-          // Fix By Orumaito
-        if (chats == 'me quieres ver la cara') {
-        if (!isOwner) return await bocchi.reply(from, eng.ownerOnly(), id)
-                bocchi.sendPtt(from, './estupida.mp3', id)
-        }
-             // Fix By Orumaito
-        if (chats == '.nimerga') {
-        if (!isOwner) return await bocchi.reply(from, eng.ownerOnly(), id)
-                bocchi.sendPtt(from, './nimerga.mp3', id)
-        }
-           // Fix By Orumaito
-        if (chats == '.noches') {
-        if (!isOwner) return await bocchi.reply(from, eng.ownerOnly(), id)
-                bocchi.sendPtt(from, './noches.mp3', id)
         }
         
 
@@ -409,7 +372,41 @@ if (autores. match ('robotina')){
             if (!isGroupMsg) await bocchi.reply(from, `Waalaikumsalam , Halo Kak, Untuk Memulai bot silahkan ketik ${prefix}menu`, id)
         }
         */
-
+// Fix By Orumaito
+        if (chats == '.dias grupo') {
+        if (!isOwner) return await bocchi.reply(from, eng.ownerOnly(), id)
+                bocchi.sendPtt(from, './buenosdias.mp3', id)
+        }
+         // Fix By Orumaito
+        if (chats == '.alerta') {
+        if (!isOwner) return await bocchi.reply(from, eng.ownerOnly(), id)
+                bocchi.sendPtt(from, './alerta.mp3', id)
+        }
+         // Fix By Orumaito
+        if (chats == '.hola bebe') {
+        if (!isOwner) return await bocchi.reply(from, eng.ownerOnly(), id)
+                bocchi.sendPtt(from, './bebe.mp3', id)
+        }
+                 // Fix By Orumaito
+        if (chats == '.diablos señorita') {
+        if (!isOwner) return await bocchi.reply(from, eng.ownerOnly(), id)
+                bocchi.sendPtt(from, './diablos.mp3', id)
+        }
+          // Fix By Orumaito
+        if (chats == 'me quieres ver la cara') {
+        if (!isOwner) return await bocchi.reply(from, eng.ownerOnly(), id)
+                bocchi.sendPtt(from, './estupida.mp3', id)
+        }
+             // Fix By Orumaito
+        if (chats == '.nimerga') {
+        if (!isOwner) return await bocchi.reply(from, eng.ownerOnly(), id)
+                bocchi.sendPtt(from, './nimerga.mp3', id)
+        }
+           // Fix By Orumaito
+        if (chats == '.noches') {
+        if (!isOwner) return await bocchi.reply(from, eng.ownerOnly(), id)
+                bocchi.sendPtt(from, './noches.mp3', id)
+        }
         // Mute
         if (isCmd && isMute && !isGroupAdmins && !isOwner && !isPremium) return
         
@@ -2957,6 +2954,18 @@ if (autores. match ('robotina')){
                         await bocchi.reply(from, 'Error!', id)
                     })
             break
+case 'cartita':
+			if (!isRegistered) return await bocchi.reply(from, eng.notRegistered(), id)
+            if (!isGroupMsg) return bocchi.reply(from, 'Este comando solo funciona en grupos!', id)
+            await bocchi.reply(from, eng.wait(), id)
+                if (args.length == 0) return bocchi.reply(from, `Falsa su frase!`, id)
+                const nulisq = body.slice(8)
+                const nulisp = await misc.tulis(nulisq)
+                await bocchi.sendImage(from, `${nulisp}`, '', 'Aqui está su Cartita 📝!', id)
+                .catch(() => {
+                    bocchi.reply(from, 'Ocurre un Error!', id)
+                })
+                break
             case 'triggered':
                 if (!isRegistered) return await bocchi.reply(from, eng.notRegistered(), id)
                 if (isMedia && isImage || isQuotedImage) {
@@ -3291,7 +3300,27 @@ if (autores. match ('robotina')){
                         await bocchi.reply(from, eng.wrongFormat(), id)
                     }
             break
-            case 'stickermeme':
+           
+case 'meme':
+                if (!isRegistered) return await bocchi.reply(from, eng.notRegistered(), id)
+                if (!q.includes('|')) return await bocchi.reply(from, eng.wrongFormat(), id)
+                if (isMedia && isImage || isQuotedImage) {
+                    if (limit.isLimit(sender.id, _limit, limitCount, isPremium, isOwner)) return await bocchi.reply(from, eng.limit(), id)
+                    limit.addLimit(sender.id, _limit, isPremium, isOwner)
+                    await bocchi.reply(from, eng.wait(), id)
+                    const top = q.substring(0, q.indexOf('|') - 1)
+                    const bottom = q.substring(q.lastIndexOf('|') + 2)
+                    const encryptMedia = isQuotedImage ? quotedMsg : message
+                    const mediaData = await decryptMedia(encryptMedia, uaOverride)
+                    const getUrl = await uploadImages(mediaData, `meme.${sender.id}`)
+                    await bocchi.sendFileFromUrl(from, `https://api.memegen.link/images/custom/${top}/${bottom}.png?background=${getUrl}`, 'Wasted.jpg', 'El sticker esta siendo enviado', id).then(() => bocchi.sendStickerfromUrl(from, `https://api.memegen.link/images/custom/${top}/${bottom}.png?background=${getUrl}`))
+                } else {
+                    await bocchi.reply(from, eng.wrongFormat(), id)
+                }
+            break
+
+
+case 'stickermeme':
             case 'stcmeme':
                 if (!isRegistered) return await bocchi.reply(from, eng.notRegistered(), id)
                 if (!q.includes('|')) return await bocchi.reply(from, eng.wrongFormat(), id)
@@ -4662,11 +4691,11 @@ case 'puntos':
                 if (mentionedJidList.length !== 0) {
                     for (let give of mentionedJidList) {
                         level.addLevelingXp(give, Number(args[1]), _level)
-                        await bocchi.reply(from, `Se a�adieron Puntos de XP a: ${give} ?\nPuntos agregados: ${args[1]} ??`, id)
+                        await bocchi.reply(from, `Se asignaron Puntos de XP a: ${give} ?\nPuntos agregados: ${args[1]} 🤩`, id)
                     }
                 } else {
                     level.addLevelingXp(args[0] + '@c.us', Number(args[1]), _level)
-                    await bocchi.reply(from, `Se a�adieron Puntos de XP a: ${args[0]} ?\nPuntos agregados: ${args[1]} ??`, id)
+                    await bocchi.reply(from, `Se asignaron Puntos de XP a: ${args[0]} ?\nPuntos agregados: ${args[1]} 🤩`, id)
                 }
             break
 
