@@ -133,6 +133,8 @@ Nos dará una devolución de llamada como `SUCCESS: se guardó el valor especifi
 > npm i ytsr
 > npm i ytdl-core
 > npm install remove.bg
+> apt-get install webp
+> apt-get install libwebp-dev
 ```
 
 ## 🆗 Ejecute el bot
