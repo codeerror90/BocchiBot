@@ -137,7 +137,8 @@ Nos dará una devolución de llamada como `SUCCESS: se guardó el valor especifi
 > npm i ytsr
 > npm i ytdl-core
 > npm install remove.bg
-> npmi fb-video-downloader
+> npm i fb-video-downloader
+> npm i node-tesseract-ocr
 > 
 ```
 
