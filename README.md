@@ -130,12 +130,14 @@ Nos dará una devolución de llamada como `SUCCESS: se guardó el valor especifi
 ```cmd
 > npm install
 > apt-get install ffmpeg 
+> apt-get install webp
+> apt-get install libwebp-dev
+> apt install tesseract-ocr
+> apt install libtesseract-dev
 > npm i ytsr
 > npm i ytdl-core
 > npm install remove.bg
 > npmi fb-video-downloader
-> apt-get install webp
-> apt-get install libwebp-dev
 > 
 ```
 
