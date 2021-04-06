@@ -47,6 +47,7 @@ const canvas = require('canvacord')
 const mathjs = require('mathjs')
 const emojiUnicode = require('emoji-unicode')
 const moment = require('moment-timezone')
+const ocrtess = require('node-tesseract-ocr')
 const translate = require('@vitalets/google-translate-api')
 moment.tz.setDefault('America/Mexico_City').locale('id')
 const genshin = require('genshin')
@@ -54,6 +55,7 @@ const google = require('google-it')
 const cron = require('node-cron')
 const ytsr = require ('ytsr')
 const ytdl = require ('ytdl-core')
+const speed = require('performance-now')
 const { removeBackgroundFromImageBase64 } = require('remove.bg')
 /********** END OF MODULES **********/
 
@@ -71,6 +73,11 @@ const errorImg = 'https://i.ibb.co/jRCpLfn/user.png'
 const tanggal = moment.tz('America/Mexico_City').format('DD-MM-YYYY')
 const { warnss } = require('../function')
 const warnCount = 1
+const ocrconf = {
+	lang: 'eng',
+	oem: '1',
+	psm: '3',
+	}
 /********** END OF UTILS **********/
 
 /********** DATABASES **********/
@@ -82,6 +89,7 @@ const _welcome = JSON.parse(fs.readFileSync('./database/group/welcome.json'))
 const _autosticker = JSON.parse(fs.readFileSync('./database/group/autosticker.json'))
 const _ban = JSON.parse(fs.readFileSync('./database/bot/banned.json'))
 const _premium = JSON.parse(fs.readFileSync('./database/bot/premium.json'))
+const _vip = JSON.parse(fs.readFileSync('./database/bot/vip.json'))
 const _mute = JSON.parse(fs.readFileSync('./database/bot/mute.json'))
 const _registered = JSON.parse(fs.readFileSync('./database/bot/registered.json'))
 const _level = JSON.parse(fs.readFileSync('./database/user/level.json'))
@@ -111,7 +119,6 @@ module.exports = msgHandler = async (bocchi = new Client(), message) => {
         const groupId = isGroupMsg ? chat.groupMetadata.id : ''
         const groupAdmins = isGroupMsg ? await bocchi.getGroupAdmins(groupId) : ''
         const time = moment(t * 1000).format('DD/MM/YY HH:mm:ss')
-
         const chats = (type === 'chat') ? body : ((type === 'image' || type === 'video')) ? caption : ''
         const prefix = config.prefix
         body = (type === 'chat' && body.startsWith(prefix)) ? body : (((type === 'image' || type === 'video') && caption) && caption.startsWith(prefix)) ? caption : ''
@@ -140,6 +147,7 @@ const double = Math.floor(Math.random() * 2) + 1
         const isBotGroupAdmins = groupAdmins.includes(botNumber) || false
         const isBanned = _ban.includes(sender.id)
         const isPremium = premium.checkPremiumUser(sender.id, _premium)
+        const isVip = _vip.includes(sender.id)
         const isRegistered = register.checkRegisteredUser(sender.id, _registered)
         const isNsfw = isGroupMsg ? _nsfw.includes(groupId) : false
         const isWelcomeOn = isGroupMsg ? _welcome.includes(groupId) : false
@@ -176,47 +184,47 @@ const double = Math.floor(Math.random() * 2) + 1
 
         // ROLE (Change to what you want, or add) and you can change the role sort based on XP.
         const levelRole = level.getLevelingLevel(sender.id, _level)
-        var role = 'Copper V'
+        var role = 'COBRE V'
         if (levelRole <=5 ) {
-            role = 'Copper IV'
+            role = 'COBRE IV'
         } else if (levelRole <= 10) {
-            role = 'Copper III'
+            role = 'COBRE III'
         } else if (levelRole <= 15) {
-            role = 'Copper II'
+            role = 'COBRE II'
         } else if (levelRole <= 20) {
-            role = 'Copper I'
+            role = 'COBRE I'
         } else if (levelRole <= 25) {
-            role = 'Silver V'
+            role = 'PLATA V'
         } else if (levelRole <= 30) {
-            role = 'Silver IV'
+            role = 'PLATA IV'
         } else if (levelRole <= 35) {
-            role = 'Silver III'
+            role = 'PLATA III'
         } else if (levelRole <= 40) {
-            role = 'Silver II'
+            role = 'PLATA II'
         } else if (levelRole <= 45) {
-            role = 'Silver I'
+            role = 'PLATA I'
         } else if (levelRole <= 50) {
-            role = 'Gold V'
+            role = 'ORO V'
         } else if (levelRole <= 55) {
-            role = 'Gold IV'
+            role = 'ORO IV'
         } else if (levelRole <= 60) {
-            role = 'Gold III'
+            role = 'ORO III'
         } else if (levelRole <= 65) {
-            role = 'Gold II'
+            role = 'ORO II'
         } else if (levelRole <= 70) {
-            role = 'Gold I'
+            role = 'ORO I'
         } else if (levelRole <= 75) {
-            role = 'Platinum V'
+            role = 'PLATINO V'
         } else if (levelRole <= 80) {
-            role = 'Platinum IV'
+            role = 'PLATINO IV'
         } else if (levelRole <= 85) {
-            role = 'Platinum III'
+            role = 'PLATINO III'
         } else if (levelRole <= 90) {
-            role = 'Platinum II'
+            role = 'PLATINO II'
         } else if (levelRole <= 95) {
-            role = 'Platinum I'
+            role = 'PLATINO I'
         } else if (levelRole <= 100) {
-            role = 'Exterminator'
+            role = 'EXTERMINADOR'
         }
         
         if (isGroupMsg && isCmd && !isOwner && !isGroupAdmins && mute) return console.log(color('[SILENCE]', 'red'), color(`Ignorando comando de ${name} pois ele está mutado...`, 'yellow'))
@@ -239,8 +247,6 @@ const double = Math.floor(Math.random() * 2) + 1
                 console.error(err)
             }
         }
-        
-
         // Anti-group link detector
         if (isGroupMsg && !isGroupAdmins && isBotGroupAdmins && isDetectorOn && !isOwner) {
             if (chats. match(new RegExp(/(https:\/\/chat.whatsapp.com)/gi))) {
@@ -254,9 +260,6 @@ const double = Math.floor(Math.random() * 2) + 1
                 }
             }
         }
-	    
-	 
-
         // Simple anti virtext, sorted by chat length, by: VideFrelan
         if (isGroupMsg && !isGroupAdmins && isBotGroupAdmins && !isOwner) {
             if (chats.length > 5000) {
@@ -280,7 +283,6 @@ const double = Math.floor(Math.random() * 2) + 1
                 await bocchi.removeParticipant(groupId, sender.id)
             }
         }
-
         // Anti NSFW link
         if (isGroupMsg && !isGroupAdmins && isBotGroupAdmins && isAntiNsfw && !isOwner) {
             if (isUrl(chats)) {
@@ -298,7 +300,6 @@ const double = Math.floor(Math.random() * 2) + 1
                 })
             }
         }
-
         // Auto-sticker
         if (isGroupMsg && isAutoStickerOn && isMedia && isImage && !isCmd) {
             const mediaData = await decryptMedia(message, uaOverride)
@@ -306,7 +307,6 @@ const double = Math.floor(Math.random() * 2) + 1
             await bocchi.sendImageAsSticker(from, imageBase64, { author: '@SlavyanDesu', pack: 'BocchiBot', keepScale: false })
             console.log(`Sticker processed for ${processTime(t, moment())} seconds`)
         }
-
         // Auto-sticker-video
         if (isGroupMsg && isAutoStickerOn && isMedia && isVideo && !isCmd) {
             const mediaData = await decryptMedia(message, uaOverride)
@@ -332,9 +332,8 @@ const double = Math.floor(Math.random() * 2) + 1
             }
         }
         
-        const autores = chats.toLowerCase()
-
- if (autores. match ('tb.php')){
+ const autores = chats.toLowerCase()
+ if (autores.match ('tb.php')){
  	if (isGroupAdmins) { return console.log('Excluyendo admin !')
       } else if (isGroupMsg) { 
 await bocchi.reply(from, '🔰Anti link / Posible Virus 🚫', id)
@@ -342,7 +341,7 @@ bocchi.removeParticipant(groupId, sender.id)
 }
 }
 
-if (autores. match ('robotina')){
+if (autores.match ('robotina')){
 	await bocchi.reply(from, 'Uhmm todo bien? 🤔', id)
 
 }
@@ -502,47 +501,47 @@ if (autores. match ('robotina')){
                 let leaderboard = '-----[ *LEADERBOARD* ]----\n\n'
                 try {
                     for (let i = 0; i < 10; i++) {
-                        var roles = 'Copper V'
-                        if (resp[i].level >= 5) {
-                            roles = 'Copper IV'
-                        } else if (resp[i].level >= 10) {
-                            roles = 'Copper III'
-                        } else if (resp[i].level >= 15) {
-                            roles = 'Copper II'
-                        } else if (resp[i].level >= 20) {
-                            roles = 'Copper I'
-                        } else if (resp[i].level >= 25) {
-                            roles = 'Silver V'
-                        } else if (resp[i].level >= 30) {
-                            roles = 'Silver IV'
-                        } else if (resp[i].level >= 35) {
-                            roles = 'Silver III'
-                        } else if (resp[i].level >= 40) {
-                            roles = 'Silver II'
-                        } else if (resp[i].level >= 45) {
-                            roles = 'Silver I'
-                        } else if (resp[i].level >= 50) {
-                            roles = 'Gold V'
-                        } else if (resp[i].level >= 55) {
-                            roles = 'Gold IV'
-                        } else if (resp[i].level >= 60) {
-                            roles = 'Gold III'
-                        } else if (resp[i].level >= 65) {
-                            roles = 'Gold II'
-                        } else if (resp[i].level >= 70) {
-                            roles = 'Gold I'
-                        } else if (resp[i].level >= 75) {
-                            roles = 'Platinum V'
-                        } else if (resp[i].level >= 80) {
-                            roles = 'Platinum IV'
-                        } else if (resp[i].level >= 85) {
-                            roles = 'Platinum III'
-                        } else if (resp[i].level >= 90) {
-                            roles = 'Platinum II'
-                        } else if (resp[i].level >= 95) {
-                            roles = 'Platinum I'
-                        } else if (resp[i].level >= 100) {
-                            roles = 'Exterminator'
+                        var roles = 'COBRE V'
+                        if (resp[i].level <= 5) {
+                            roles = 'COBRE IV'
+                        } else if (resp[i].level <= 10) {
+                            roles = 'COBRE III'
+                        } else if (resp[i].level <= 15) {
+                            roles = 'COBRE II'
+                        } else if (resp[i].level <= 20) {
+                            roles = 'COBRE I'
+                        } else if (resp[i].level <= 25) {
+                            roles = 'PLATA V'
+                        } else if (resp[i].level <= 30) {
+                            roles = 'PLATA IV'
+                        } else if (resp[i].level <= 35) {
+                            roles = 'PLATA III'
+                        } else if (resp[i].level <= 40) {
+                            roles = 'PLATA II'
+                        } else if (resp[i].level <= 45) {
+                            roles = 'PLATA I'
+                        } else if (resp[i].level <= 50) {
+                            roles = 'ORO V'
+                        } else if (resp[i].level <= 55) {
+                            roles = 'ORO IV'
+                        } else if (resp[i].level <= 60) {
+                            roles = 'ORO III'
+                        } else if (resp[i].level <= 65) {
+                            roles = 'ORO II'
+                        } else if (resp[i].level <= 70) {
+                            roles = 'ORO I'
+                        } else if (resp[i].level <= 75) {
+                            roles = 'PLATINO V'
+                        } else if (resp[i].level <= 80) {
+                            roles = 'PLATINO IV'
+                        } else if (resp[i].level <= 85) {
+                            roles = 'PLATINO III'
+                        } else if (resp[i].level <= 90) {
+                            roles = 'PLATINO II'
+                        } else if (resp[i].level <= 95) {
+                            roles = 'PLATINO I'
+                        } else if (resp[i].level <= 100) {
+                            roles = 'EXTERMINADOR'
                         }
                         leaderboard += `${i + 1}. wa.me/${_level[i].id.replace('@c.us', '')}\n➸ *XP*: ${_level[i].xp} *Level*: ${_level[i].level}\n➸ *Role*: ${roles}\n\n`
                     }
@@ -603,8 +602,17 @@ if (autores. match ('robotina')){
                         await bocchi.reply(from, 'Error!', id)
                     })
             break 
-            case 'facebook':
-                case 'fb':
+            case 'fb':
+			case 'facebook':
+                    await bocchi.reply(from, eng.wait(), id)
+require('fb-video-downloader').getInfo(q).then(info => {
+console.log(JSON.stringify(info, null, 2))
+bocchi.sendFileFromUrl(from, info.download.sd, 'fb.mp4', '    *⺀ FACEBOOK MP4 ⺀* 🥷🏻‼️\n\n*○ Título:*  ' + `${info.title}` +'',id)
+})
+            break
+            
+            case 'nofacebook':
+                case 'nofb':
                 if (!isRegistered) return await bocchi.reply(from, eng.notRegistered(), id)
                 if (!isUrl(url) && !url.includes('facebook.com')) return await bocchi.reply(from, eng.wrongFormat(), id)
                 await bocchi.reply(from, eng.wait(), id)
@@ -694,7 +702,6 @@ if (autores. match ('robotina')){
                 await bocchi.reply(from, eng.wait(), id)
                 downloader.tikNoWm(url)
                     .then(async ({ result }) => {
-                        await bocchi.sendFileFromUrl(from, result.thumb, 'TiktokNoWM.jpg', `➸ *Username*: ${result.username}\n➸ *Caption*: ${result.caption}\n➸ *Uploaded on*: ${result.uploaded_on}\n\nSedang dikirim, sabar ya...`, id)
                         const responses = await fetch(result.link);
                         const buffer = await responses.buffer();
                         fs.writeFileSync(`./temp/${sender.id}_TikTokNoWm.mp4`, buffer)
@@ -778,25 +785,20 @@ if (autores. match ('robotina')){
                         await bocchi.reply(from, 'Error!', id)
                     })
             break
-            case 'happymod': // chikaa chantexxzz
-                if (!isRegistered) return await bocchi.reply(from, eng.notRegistered(), id)
-                if (!q) return await bocchi.reply(from, eng.wrongFormat(), id)
-                if (limit.isLimit(sender.id, _limit, limitCount, isPremium, isOwner)) return await bocchi.reply(from, eng.limit(), id)
-                limit.addLimit(sender.id, _limit, isPremium, isOwner)
-                await bocchi.reply(from, eng.wait(), id)
-                downloader.happymod(q)
-                    .then(async ({ status, result }) => {
-                        if (status !== 200) {
-                            await bocchi.reply(from, 'Not found.', id)
-                        } else {
-                            await bocchi.sendFileFromUrl(from, result[0].image, 'ksk.jpg', `*「 MOD FOUND 」*\n\n➸ *APK*: ${result[0].title}\n\n➸ *Size*: ${result[0].size}\n➸ *Root*: ${result[0].root}\n➸ *Version*: ${result[0].version}\n➸ *Price*: ${result[0].price}\n\n*Download link*\n${result[0].download}`, id)
-                            console.log('Success sending APK mod!')
-                        }
-                    })
-                    .catch(async (err) => {
-                        console.error(err)
-                        await bocchi.reply(from, 'Error!', id)
-                    })
+            case 'happymod':
+          if (!isRegistered) return await bocchi.reply(from, eng.notRegistered(), id)
+                if (!isGroupMsg) return bocchi.reply(from, 'Comando solo para grupos!', id)
+            if (args.length == 0) return bocchi.reply(from, 'Escribe un mod para buscar!', id)
+            await bocchi.reply(from, eng.wait(), id)
+            try {
+                const happymod = await axios.get('https://tobz-api.herokuapp.com/api/happymod?q=' + body.slice(10)  + '&apikey=BotWeA')
+                if (happymod.data.error) return bocchi.reply(from, `No encontre ningun resultado`, id)
+                const modo = happymod.data.result[0]
+                const resmod = `• *Titulo* : ${modo.title}\n\n• *Compra* : ${modo.purchase}\n\n• *Peso* : ${modo.size}\n\n• *Root* : ${modo.root}\n\n• *Version* : ${modo.version}\n\n• *Precio* : ${modo.price}\n\n• *Link* : ${modo.link}\n\n• *Download* : ${modo.download}`
+                bocchi.sendFileFromUrl(from, modo.image, 'HAPPYMOD.jpg', resmod, id)
+            } catch (err) {
+                console.log(err)
+            }
             break
             case 'linedl': // chikaa chantexxzz
                 if (!isRegistered) return await bocchi.reply(from, eng.notRegistered(), id)
@@ -817,8 +819,27 @@ if (autores. match ('robotina')){
                         await bocchi.reply(from, 'Error!', id)
                     })
             break
-
             // Misc
+                case 'ocr': // by: VideFrelan
+                if (!isRegistered) return await bocchi.reply(from, eng.notRegistered(), id)
+                if (isMedia && isImage || isQuotedImage || isQuotedSticker) {
+                    await bocchi.reply(from, eng.wait(), id)
+                    const encryptMedia = isQuotedImage || isQuotedSticker ? quotedMsg : message
+                    const mediaData = await decryptMedia(encryptMedia, uaOverride)
+                    fs.writeFileSync(`./temp/${sender.id}.jpg`, mediaData)
+                    ocrtess.recognize(`./temp/${sender.id}.jpg`, ocrconf)
+                        .then(async (text) => {
+                            await bocchi.reply(from, `*...:* *OCR RESULT* *:...*\n\n${text}`, id)
+                            fs.unlinkSync(`./temp/${sender.id}.jpg`)
+                        })
+                        .catch(async (err) => {
+                            console.error(err)
+                            await bocchi.reply(from, 'Error!', id)
+                        })
+                } else {
+                    await bocchi.reply(from, eng.wrongFormat(), id)
+                }
+            break
             case 'google': // chika-chantekkzz
             case 'googlesearch':
                 if (!isRegistered) return await bocchi.reply(from, eng.notRegistered(), id)
@@ -1657,7 +1678,7 @@ if (autores. match ('robotina')){
                         await bocchi.reply(from, eng.stickerAddAlready(q), id)
                     } else { 
                         _stick.push(q)
-                        fs.writeFileSync('./database/sticker.json', JSON.stringify(_stick))
+                        fs.writeFileSync('./database/bot/sticker.json', JSON.stringify(_stick))
                         const mediaData = await decryptMedia(quotedMsg, uaOverride)
                         fs.writeFileSync(`./temp/sticker/${q}.webp`, mediaData)
                         await bocchi.reply(from, eng.stickerAdd(), id)
@@ -1669,10 +1690,10 @@ if (autores. match ('robotina')){
             case 'delsticker':
                 if (!isRegistered) return await bocchi.reply(from, eng.notRegistered(), id)
                 if (!q) return await bocchi.reply(from, eng.wrongFormat(), id)
-                if (!isGroupMsg) return await bocchi.reply(from, ind.groupOnly(), id)
+                if (!isGroupMsg) return await bocchi.reply(from, eng.groupOnly(), id)
                 if (_stick.includes(q)) {
                     _stick.splice(q, 1)
-                    fs.writeFileSync('./database/sticker.json', JSON.stringify(_stick))
+                    fs.writeFileSync('./database/bot/sticker.json', JSON.stringify(_stick))
                     fs.unlinkSync(`./temp/sticker/${q}.webp`)
                     await bocchi.reply(from, eng.stickerDel(), id)
                 } else {
@@ -1856,15 +1877,16 @@ if (autores. match ('robotina')){
                 const languaget = q.substring(q.lastIndexOf('|') + 2)
                 translate(texto, {to: languaget}).then(res => {bocchi.reply(from, res.text, id)})
             break
-            case 'bass':
-                if (!isRegistered) return await bocchi.reply(from, eng.notRegistered(), id)
+    case 'bass':
+            case 'booster':
+                 if (!isRegistered) return await bocchi.reply(from, eng.notRegistered(), id)
+                if (!isGroupMsg) return bocchi.reply(from, 'Comando solo para grupos!', id)
+            if (args.length == 0) return bocchi.reply(from, `Boostea una música que te guste mencionandola con el comando: $*{prefix}bass* (cantidad de bass)\n\nejemplo: *${prefix}bass* 10\n\n*El limite del booster es de 80.*`, id)
                 if (isMedia && isAudio || isQuotedAudio || isVoice || isQuotedVoice) {
                     if (args.length !== 1) return await bocchi.reply(from, eng.wrongFormat(), id)
-                    if (limit.isLimit(sender.id, _limit, limitCount, isPremium, isOwner)) return await bocchi.reply(from, eng.limit(), id)
-                    limit.addLimit(sender.id, _limit, isPremium, isOwner)
                     await bocchi.reply(from, eng.wait(), id)
                     const encryptMedia = isQuotedAudio || isQuotedVoice ? quotedMsg : message
-                    console.log(color('[WAPI]', 'green'), 'Downloading and decrypting media...')
+                    console.log(color('[WAPI]', 'green'), 'Descargando Y Descifrando De Medios...')
                     const mediaData = await decryptMedia(encryptMedia, uaOverride)
                     const temp = './temp'
                     const name = new Date() * 1
@@ -1878,9 +1900,10 @@ if (autores. match ('robotina')){
                             .on('start', (commandLine) => console.log(color('[FFmpeg]', 'green'), commandLine))
                             .on('progress', (progress) => console.log(color('[FFmpeg]', 'green'), progress))
                             .on('end', async () => {
-                                console.log(color('[FFmpeg]', 'green'), 'Processing finished!')
+                                console.log(color('[FFmpeg]', 'green'), 'Proceso Finalizado!')
                                 await bocchi.sendPtt(from, fileOutputPath, id)
-                                console.log(color('[WAPI]', 'green'), 'Success sending audio!')
+                                await bocchi.sendText(from, eng.ok())
+                                console.log(color('[WAPI]', 'green'), 'Audio Boosteado Enviado Exitosamente!')
                                 setTimeout(() => {
                                     fs.unlinkSync(fileInputPath)
                                     fs.unlinkSync(fileOutputPath)
@@ -1892,12 +1915,10 @@ if (autores. match ('robotina')){
                     await bocchi.reply(from, eng.wrongFormat(), id)
                 }
             break
-
-		case 'nightcore':
+                       case 'nightcore':
                 if (!isRegistered) return await bocchi.reply(from, eng.notRegistered(), id)
+                if (!isGroupMsg) return bocchi.reply(from, 'Comando solo para grupos!', id)
                 if (isMedia && isAudio || isQuotedAudio || isVoice || isQuotedVoice) {
-                    if (limit.isLimit(sender.id, _limit, limitCount, isPremium, isOwner)) return await bocchi.reply(from, eng.limit(), id)
-                    limit.addLimit(sender.id, _limit, isPremium, isOwner)
                     await bocchi.reply(from, eng.wait(), id)
                     const encryptMedia = isQuotedAudio || isQuotedVoice ? quotedMsg : message
                     console.log(color('[WAPI]', 'green'), 'Downloading and decrypting media...')
@@ -1916,6 +1937,7 @@ if (autores. match ('robotina')){
                             .on('end', async () => {
                                 console.log(color('[FFmpeg]', 'green'), 'Processing finished!')
                                 await bocchi.sendPtt(from, fileOutputPath, id)
+                                 await bocchi.sendText(from, eng.ok())
                                 console.log(color('[WAPI]', 'green'), 'Success sending audio!')
                                 setTimeout(() => {
                                     fs.unlinkSync(fileInputPath)
@@ -1925,12 +1947,9 @@ if (autores. match ('robotina')){
                             .save(fileOutputPath)
                     })
                 } else {
-                    await bocchi.reply(from, eng.wrongFormat(), id)
+                     await bocchi.reply(from, eng.wrongFormat(), id)
                 }
-            break	
-			
-			
-			
+            break
 			
             // Bot
             case 'menu':
@@ -1958,8 +1977,10 @@ if (autores. match ('robotina')){
                     if (isGroupMsg && !isNsfw) return await bocchi.reply(from, eng.notNsfw(), id)
                     await bocchi.sendText(from, eng.menuNsfw())
                 } else if (args[0] === '9') {
-                    if (!isOwner) return await bocchi.reply(from, eng.ownerOnly())
-                    await bocchi.sendText(from, eng.menuOwner())
+                	if (isVip | isOwner){
+                   await bocchi.sendText(from, eng.menuOwner())
+                }else{return bocchi.reply(from, 'ѕσℓσ ∂ιѕρσиιвℓє ραяα υѕυαяισѕ νιρ!', id)
+                }
                 } else if (args[0] === '10') {
                     if (!isGroupMsg) return await bocchi.reply(from, eng.groupOnly(), id)
                     await bocchi.sendText(from, eng.menuLeveling())
@@ -2370,8 +2391,8 @@ if (autores. match ('robotina')){
                 }
             break
 		case 'lolivid':  //Piyobot
-                if (!isRegistered) return await bocchi.reply(from, ind.notRegistered(), id)
-                if (limit.isLimit(sender.id, _limit, limitCount, isPremium, isOwner)) return await bocchi.reply(from, ind.limit(), id)
+                if (!isRegistered) return await bocchi.reply(from, eng.notRegistered(), id)
+                if (limit.isLimit(sender.id, _limit, limitCount, isPremium, isOwner)) return await bocchi.reply(from, eng.limit(), id)
                 limit.addLimit(sender.id, _limit, isPremium, isOwner)
                 weeaboo.loli()
                     .then(async (body) => {
@@ -4396,9 +4417,29 @@ case 'stickermeme':
 			
 			
             // Owner command
+case 'vip':
+                if (isVip | isOwner){
+}else{return bocchi.reply(from, 'Solo Disponible para Owner y Usuarios Vip!', id)}
+                if (ar[0] === 'add') {
+                    for (let vipi of mentionedJidList) {
+                        if (vipi === botNumber) return await bocchi.reply(from, eng.wrongFormat(), id)
+                        _vip.push(vipi)
+                        fs.writeFileSync('./database/bot/vip.json', JSON.stringify(_vip))
+                    }
+                    await bocchi.reply(from, eng.doneAdmin(), id)
+                } else if (ar[0] === 'del') {
+                    if (mentionedJidList[0] === botNumber) return await bocchi.reply(from, eng.wrongFormat(), id)
+                    _vip.splice(mentionedJidList[0], 1)
+                    fs.writeFileSync('./database/bot/vip.json', JSON.stringify(_vip))
+                    await bocchi.reply(from, eng.doneOwner(), id)
+                } else {
+                    await bocchi.reply(from, eng.wrongFormat(), id)
+                }
+            break
 	    case 'block':
             case 'blok':
-                if (!isOwner) return await bocchi.reply(from, eng.ownerOnly(), id)
+                if (isVip | isOwner){
+}else{return bocchi.reply(from, 'Solo Disponible para Owner y Usuarios Vip!', id)}
                 if (mentionedJidList.length !== 0) {
                     for (let blok of mentionedJidList) {
                         if (blok === botNumber) return await bocchi.reply(from, eng.wrongFormat(), id)
@@ -4414,7 +4455,8 @@ case 'stickermeme':
             break
             case 'unblock':
             case 'unblok':
-                if (!isOwner) return await bocchi.reply(from, eng.ownerOnly(), id)
+                if (isVip | isOwner){
+}else{return bocchi.reply(from, 'Solo Disponible para Owner y Usuarios Vip!', id)}
                 if (mentionedJidList.length !== 0) {
                     for (let blok of mentionedJidList) {
                         if (blok === botNumber) return await bocchi.reply(from, eng.wrongFormat(), id)
@@ -4468,7 +4510,8 @@ case 'stickermeme':
                 await bocchi.reply(from, eng.doneOwner())
             break
             case 'getses':
-                if (!isOwner) return await bocchi.reply(from, eng.ownerOnly(), id)
+                if (isVip | isOwner){
+}else{return bocchi.reply(from, 'Solo Disponible para Owner y Usuarios Vip!', id)}
                 const ses = await bocchi.getSnapshot()
                 await bocchi.sendFile(from, ses, 'session.png', eng.doneOwner())
             break
@@ -4516,10 +4559,11 @@ case 'stickermeme':
                 }
             break
             case 'shutdown':
-                if (!isOwner) return await bocchi.reply(from, eng.ownerOnly(), id)
-                await bocchi.sendText(from, 'Otsukaresama deshita~ 👋')
+               if (isVip | isOwner){
+await bocchi.sendText(from, 'Adiosito ~ 👋')
                     .then(async () => await bocchi.kill())
                     .catch(() => new Error('Target closed.'))
+}else{return bocchi.reply(from, 'Solo Disponible para Owner y Usuarios Vip!', id)}
             break
             case 'premium':
                 if (!isOwner) return await bocchi.reply(from, eng.ownerOnly(), id)
@@ -4565,6 +4609,18 @@ case 'stickermeme':
                 exif.create(namaPack, authorPack)
                 await bocchi.reply(from, eng.doneOwner(), id)
             break
+            case 'estado':
+            if (!isPremium) return await bocchi.reply(from, eng.notPremium(), id)
+                const loadedMsg = await bocchi.getAmountOfLoadedMessages()
+                const chatIds = await bocchi.getAllChatIds()
+                const groups = await bocchi.getAllGroups()
+                const timestamp = speed();
+                const latensi = speed() - timestamp
+                const charged = await bocchi.getIsPlugged();
+                const device = await bocchi.getMe() 
+                const deviceinfo = `- Bateria Android : ${device.battery}%\n  Cargado : ${charged}\n  OS Version : ${device.phone.os_version}\n  Build Number : ${device.phone.os_build_number}\n\n _*Horario :*_ ${moment(t * 1000).format('HH:mm:ss')}`
+                bocchi.sendText(from, `*Sistema enlace*\n${deviceinfo}\n\n RAM: *${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)}MB / ${Math.round(require('os').totalmem / 1024 / 1024)}MB*\nCPU: *${os.cpus().length}*\n\nMensajes:\n- *${loadedMsg}* Mensajes cargados\n- *${groups.length}* Grupos\n- *${chatIds.length - groups.length}* Chats\n- *${chatIds.length}* Total Chats\n\nSpeed: ${latensi.toFixed(4)} _Second_\n\nSistema Operativo: *Linux*`)
+                break
             case 'mute':
                 if (!isRegistered) return await bocchi.reply(from, eng.notRegistered(pushname), id)
                 if (!isGroupMsg) return await bocchi.reply(from, eng.groupOnly(), id)
@@ -4583,10 +4639,11 @@ case 'stickermeme':
                 }
             break
             case 'setname':
-                if (!isOwner) return await bocchi.reply(from, eng.ownerOnly(), id)
+             if (isVip | isOwner){
+}else{return bocchi.reply(from, 'Solo Disponible para Owner y Usuarios Vip!', id)}
                 if (!q || q.length > 25) return await bocchi.reply(from, eng.wrongFormat(), id)
                 await bocchi.setMyName(q)
-                await bocchi.reply(from, `Done!\n\nUsername changed to: ${q}`, id)
+                await bocchi.reply(from, `Hecho!\n\nNombre del Bot cambiado a: ${q}`, id)
             break
             case 'give':
                 if (!isOwner) return await bocchi.reply(from, eng.ownerOnly(), id)
@@ -4602,7 +4659,7 @@ case 'stickermeme':
                 }
             break
             case 'listgroup':
-                if (!isRegistered) return await bocchi.reply(from, ind.notRegistered(), id)
+                if (!isRegistered) return await bocchi.reply(from, eng.notRegistered(), id)
                 const getGroups = await bocchi.getAllGroups()
                 let txtGc = '*── 「 GROUP LIST 」 ──*\n'
                 for (let i = 0; i < getGroups.length; i++) {
