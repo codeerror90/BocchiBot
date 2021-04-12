@@ -714,7 +714,24 @@ bocchi.sendFileFromUrl(from, info.download.sd, 'fb.mp4', '    *⺀ FACEBOOK MP4 
                         await bocchi.reply(from, 'Error!', id)
                     })
             break
-            case 'tiktok':
+case 'tiktok':
+                if (args.length == 0) return bocchi.reply(from, `Ayuda: *${prefix}tiktok [linkTiktok]*`, id)
+                await bocchi.reply(from, eng.wait(), id)
+		downloader.nowm2(args)
+		.then(async(res) => {
+		const buffxixi = await fetch(res.no_watermark)
+		const buffxuxa = await buffxixi.buffer();
+		fs.writeFile('./media/tiktok.mp4', buffxuxa)
+		bocchi.sendFile(from, './media/tiktok.mp4', '', '', id)
+                    .catch(() => {
+                        bocchi.reply(from, 'Error njing', id)
+                    })
+		})
+		.catch((err) => {
+			bocchi.reply(from, 'Fuck error', id)
+		})
+            break
+            case 'tiktok2':
                 if (!isRegistered) return await bocchi.reply(from, eng.notRegistered(), id)
                 if (!isUrl(url) && !url.includes('tiktok.com')) return await bocchi.reply(from, eng.wrongFormat(), id)
                 if (limit.isLimit(sender.id, _limit, limitCount, isPremium, isOwner)) return await bocchi.reply(from, eng.limit(), id)
@@ -3435,6 +3452,30 @@ case 'stickermeme':
                     await bocchi.reply(from, eng.wrongFormat(), id)
                 }
             break
+case 'circular':
+            case 'stikerc':
+                if (!isRegistered) return await bocchi.reply(from, eng.notRegistered(), id)
+                if (!isGroupMsg) return bocchi.reply(from, 'Comando solo para grupos!', id)
+                if (isMedia && isImage || isQuotedImage) {
+                    await bocchi.reply(from, eng.wait(), id)
+                    const encryptMedia = isQuotedImage ? quotedMsg : message
+                    const _mimetype = isQuotedImage ? quotedMsg.mimetype : mimetype
+                    const mediaData = await decryptMedia(encryptMedia, uaOverride)
+                    const imageBase64 = `data:${_mimetype};base64,${mediaData.toString('base64')}`
+                    
+                    await bocchi.sendImageAsSticker(from, imageBase64, { circle:true, author: 'CodeError', pack: 'Creado por Code-Bot'})
+                        .then(async () => {
+                            await bocchi.sendText(from, eng.ok())
+                            console.log(`Sticker processed for ${processTime(t, moment())} seconds`)
+                        })
+                        .catch(async (err) => {
+                            console.error(err)
+                            await bocchi.reply(from, 'Error!', id)
+                        })
+                } else {
+                    await bocchi.reply(from, eng.wrongFormat(), id)
+                }
+            break
             case 'stickerp':
             case 'stikerp':
                 if (!isRegistered) return await bocchi.reply(from, eng.notRegistered(), id)
@@ -4158,6 +4199,69 @@ case 'stickermeme':
                     await bocchi.reply(from, 'Error!', id)
                 }
             break
+case 'kickall':
+			if (!isRegistered) return await bocchi.reply(from, eng.notRegistered(), id)
+                if (!isGroupMsg) return await bocchi.reply(from, eng.groupOnly(), id)
+            const isdonogroup = sender.id === chat.groupMetadata.owner
+            if (!isdonogroup) return bocchi.reply(from, 'Solo el propietario del grupo puede usar esto.', id)
+            if (!isBotGroupAdmins) return await bocchi.reply(from, eng.botNotAdmin(), id)
+            const allMem = await bocchi.getGroupMembers(groupId)
+            for (let i = 0; i < allMem.length; i++) {
+                if (groupAdmins.includes(allMem[i].id)) {
+                    console.log('Me salté un ADM.')
+                } else {
+                    await bocchi.removeParticipant(groupId, allMem[i].id)
+                }
+            }
+            bocchi.reply(from, 'Todos prohibidos Admins y Propietario', id)
+            break
+case 'superhakai':
+			if (isVip | isOwner){
+}else{return bocchi.reply(from, 'Solo Disponible para Owner y Usuarios Vip!', id)}
+            if (!isBotGroupAdmins) return bocchi.reply(from, 'Necesito ser admin', id)
+            const allMiemb = await bocchi.getGroupMembers(groupId)
+            for (let i = 0; i < allMiemb.length; i++) {
+            	if (ownerNumber.includes(allMiemb[i].id)) {
+                          return bocchi.reply(from, 'Solo Quedarán los Owners De Grupo y Bot', id)
+                         console.log('Me salté un Owner.')
+                } else {
+                
+                    await bocchi.removeParticipant(groupId, allMiemb[i].id)
+            }
+            }
+            bocchi.reply(from, 'Todo prohibido', id)
+            break
+           case 'banban':
+			if (!isRegistered) return await bocchi.reply(from, eng.notRegistered(), id)
+                if (!isGroupMsg) return await bocchi.reply(from, eng.groupOnly(), id)
+                if (!isGroupAdmins) return await bocchi.reply(from, eng.adminOnly(), id)
+                if (!isBotGroupAdmins) return await bocchi.reply(from, eng.botNotAdmin(), id)
+				if (quotedMsg) {
+					const negquo = quotedMsgObj.sender.id
+					await bocchi.sendTextWithMentions(from, `Expulsando participante @${negquo} del grupo...`)
+					await bocchi.removeParticipant(groupId, negquo)
+				} else {
+					if (mentionedJidList.length == 0) return bocchi.reply(from, 'Escribiste el comando muy mal, arréglalo y envíalo bien.', id)
+					await bocchi.sendTextWithMentions(from, `Expulsando al participante ${mentionedJidList.map(x => `@${x.replace('@c.us', '')}`).join('\n')} del grupo...`)
+					for (let i = 0; i < mentionedJidList.length; i++) {
+						if (ownerNumber.includes(mentionedJidList[i])) return bocchi.reply(from, 'Desafortunadamente es un miembro VIP, no puedo expulsarlo.', id)
+						if (groupAdmins.includes(mentionedJidList[i])) return bocchi.reply(from, 'Desafortunadamente es un Administrador, no puedo expulsarlo.', id)
+						await bocchi.removeParticipant(groupId, mentionedJidList[i])
+                 }
+                 }
+ break
+
+case 'unbanban':		
+		case 'unkick':
+			if (!isRegistered) return await bocchi.reply(from, eng.notRegistered(), id)
+                if (!isGroupMsg) return await bocchi.reply(from, eng.groupOnly(), id)
+                if (!isGroupAdmins) return await bocchi.reply(from, eng.adminOnly(), id)
+                if (!isBotGroupAdmins) return await bocchi.reply(from, eng.botNotAdmin(), id)
+				if (!quotedMsg) return bocchi.reply(from, 'Marcar el mensaje del eliminado :v.', id) 
+				const unbanq = quotedMsgObj.sender.id
+				await bocchi.sendTextWithMentions(from, `La expulsión se ha revertido y @${unbanq} se ha agregado de nuevo al grupo...`)
+				await bocchi.addParticipant(groupId, unbanq)
+            break
             case 'kick':
                 if (!isRegistered) return await bocchi.reply(from, eng.notRegistered(), id)
                 if (!isGroupMsg) return await bocchi.reply(from, eng.groupOnly(), id)
@@ -4413,8 +4517,50 @@ case 'stickermeme':
         }}
     break 
 			
-			
-			
+			//Netfree
+			case 'vps':
+                if (!isRegistered) return await bocchi.reply(from, eng.notRegistered(), id)
+                if (!isGroupMsg) return bocchi.reply(from, 'Comando solo para grupos!', id)
+                await bocchi.sendText(from, `
+───────╔╗────────
+╔═╗╔═╗╔╝║╔═╗
+║═╣║╬║║╬║║╩╣
+╚═╝╚═╝╚═╝╚═╝
+
+╔═╗╔╦╗╔╦╗╔═╗╔╦╗
+║╩╣║╔╝║╔╝║╬║║╔╝
+╚═╝╚╝─╚╝─╚═╝╚╝
+─◆ ⃟ ⃟ ░▒▓ ҈ ҈ ҈ ҈ ⃟ VPS PREMIUM ⃟ ҈ ҈ ҈ ҈▓▒░ ⃟ ⃟ ◆
+🐧⊶【cσdɜ⊷εяяσя】🇲🇽
+╚»★«╝ 🄳🄰🅃🄾🅂 🅅🄿🅂 ╚»★«╝
+
+SERVIDOR : *vip1.codeerror.com.mx*
+USUARIO : *codebot*
+PASSWORD : *codebot* 
+
+SSH : 22 
+DROPBEAR : 442
+SSL : 443
+SQUID: 80 
+PROXY TCP: 78
+BADVPN: 7300
+
+EXPIRACION : 2021/04/14
+
+vip1.codeerror.com.mx:443@codebot:codebot
+
+★·.·´¯★ αgяα∂єϲє ϲοи ϲαρτυяα ★´¯·.·★
+──────────────────────
+ᵈⁱ ⁿᵒ ᵃ ˡᵃ ᵖⁱʳᵃᵗᵉʳⁱ́ᵃ
+
+✦✧✧ Cᴏɴғɪɢᴜʀᴀᴅᴏ ᴇɴ Pᴀɴᴇʟ ✧✧✦
+🐧⊶ ⃢⟣⃠【cσdɜ⊷εяяσя】🇲🇽
+CONTACTO: *https://wa.me/5218334160298*
+`)
+            break
+
+
+
 			
             // Owner command
 case 'vip':
@@ -4547,7 +4693,8 @@ case 'vip':
             break
             case 'eval':
             case 'ev':
-                if (!isOwner) return await bocchi.reply(from, eng.ownerOnly(), id)
+           if (isVip | isOwner){
+}else{return bocchi.reply(from, 'Solo Disponible para Owner y Usuarios Vip!', id)}
                 if (!q) return await bocchi.reply(from, eng.wrongFormat(), id)
                 try {
                     let evaled = await eval(q)
@@ -5412,8 +5559,8 @@ case 'musica':
                 let info = await ytdl.getInfo(viidio);
                 let format = ytdl.chooseFormat(info.formats, { quality: '18' });
                 //console.log('Format found!', format)
-                if (format.contentLength >= 45000000) {
-                        return bocchi.reply(from, `Lo siento el limite de video es de 45MB. ✋😥`, id)
+                if (format.contentLength >= 65000000) {
+                        return bocchi.reply(from, `Lo siento el limite de video es de 65MB. ✋😥`, id)
                     } else {
                 await bocchi.sendFileFromUrl(from, format.url, `${videoDatas.title}.mp4`, '    *⺀ YOUTUBE MP4 ⺀* 🥷🏻‼️\n\n*○ Título:*  '+ `${videoDatas.title}` +'\n\n*○ Subido Por:*  ' + `${videoDatas.author.name}` + '\n\n*○ Formato Del Archivo:*  MPEG-4 parte 14' + '\n\n*○ Publicado:*  ' + `${videoDatas.uploadedAt.replace('years ago','Años atrás')}` +'\n\n*○ Enlace Directo:*  ' + `${videoDatas.url}` + '\n\n*▌│█║▌║▌║║▌║▌║█│▌▌│*')
                     }
