@@ -18,8 +18,8 @@ const start = (bocchi = new Client()) => {
     console.log(color('=> Bug? Error? Suggestion? Visit here:', 'yellow'), color(bugs.url))
     console.log(color('[BOCCHI]'), color('BocchiBot is now online!', 'yellow'))
     console.log(color('[DEV]', 'cyan'), color('Welcome back, Owner! Hope you are doing well~', 'magenta'))
-
-    // Uncomment code di bawah untuk mengaktifkan auto-update file changes. Tidak disarankan untuk long-time use.
+    bocchi.sendTextWithMentions('5213131003801-1588278744@g.us', `🤖 CodeBot se ha iniciado correctamente - @5218333659697@c.us`)
+    //Uncomment code di bawah untuk mengaktifkan auto-update file changes. Tidak disarankan untuk long-time use.
     // loader.nocache('../message/index.js', (m) => console.log(color('[WATCH]', 'orange'), color(`=> '${m}'`, 'yellow'), 'file is updated!'))
 
     bocchi.onStateChanged((state) => {
