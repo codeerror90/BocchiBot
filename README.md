@@ -136,7 +136,6 @@ Nos dará una devolución de llamada como `SUCCESS: se guardó el valor especifi
 > apt install libtesseract-dev
 > npm i ytsr
 > npm i ytdl-core
-> npm install remove.bg
 > npm i fb-video-downloader
 > npm i node-tesseract-ocr
 > 
