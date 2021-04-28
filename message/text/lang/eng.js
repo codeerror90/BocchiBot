@@ -31,7 +31,11 @@ exports.ownerOnly = () => {
 }
 
 exports.doneOwner = () => {
-    return `Listo, solicitud realziada~`
+    return `Listo, solicitud realizada~`
+}
+
+exports.doneAdmin = () => {
+    return `Listo, solicitud realizada~`
 }
 
 exports.groupOnly = () => {
@@ -109,6 +113,11 @@ exports.registeredAlready = () => {
 exports.received = (pushname) => {
     return `Hola ${pushname}!\nGracias por informar, trabajaremos en ello lo antes posible.`
 }
+
+exports.daily = (time) => {
+    return `Lo sentimos, pero ha alcanzado el límite con estos comandos.\nEspere por favor *${time.hours}* hora(s) *${time.minutes}* minuto(s) *${time.seconds}* segundo(s) mas.`
+}
+
 
 exports.limit = (time) => {
     return `Lo sentimos, pero ha alcanzado el límite con estos comandos.\nEspere por favor *${time.hours}* hora(s) *${time.minutes}* minuto(s) *${time.seconds}* segundo(s) mas.`
