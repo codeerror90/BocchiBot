@@ -55,6 +55,7 @@ const google = require('google-it')
 const cron = require('node-cron')
 const ytsr = require ('ytsr')
 const ytdl = require ('ytdl-core')
+const tiktoknowm = require('tiktok-dl-nowm')
 const speed = require('performance-now')
 const { removeBackgroundFromImageBase64 } = require('remove.bg')
 /********** END OF MODULES **********/
@@ -579,29 +580,6 @@ if (autores.match ('robotina')){
                         await bocchi.reply(from, 'Error!', id)
                     })
             break
-            case 'igdl': // by: VideFrelan
-            case 'instadl':
-                if (!isRegistered) return await bocchi.reply(from, eng.notRegistered(), id)
-                if (!isUrl(url) && !url.includes('instagram.com')) return await bocchi.reply(from, eng.wrongFormat(), id)
-                if (limit.isLimit(sender.id, _limit, limitCount, isPremium, isOwner)) return await bocchi.reply(from, eng.limit(), id)
-                limit.addLimit(sender.id, _limit, isPremium, isOwner)
-                await bocchi.reply(from, eng.wait(), id)
-                downloader.insta(url)
-                    .then(async ({ result }) => {
-                        for (let i = 0; i < result.post.length; i++) {
-                            if (result.post[i].type === 'image') {
-                                await bocchi.sendFileFromUrl(from, result.post[i].urlDownload, 'igpostdl.jpg', `*...:* *Instagram Downloader* *:...*\n\nUsername: ${result.owner_username}\nCaption: ${result.caption}`, id)
-                            } else if (result.post[i].type === 'video') {
-                                await bocchi.sendFileFromUrl(from, result.post[i].urlDownload, 'igpostdl.mp4', `*...:* *Instagram Downloader* *:...*\n\nUsername: ${result.owner_username}\nCaption: ${result.caption}`, id)
-                            }
-                        }
-                        console.log('Success sending Instagram media!')
-                    })
-                    .catch(async (err) => {
-                        console.error(err)
-                        await bocchi.reply(from, 'Error!', id)
-                    })
-            break 
             case 'fb':
 			case 'facebook':
                     await bocchi.reply(from, eng.wait(), id)
@@ -609,6 +587,24 @@ require('fb-video-downloader').getInfo(q).then(info => {
 console.log(JSON.stringify(info, null, 2))
 bocchi.sendFileFromUrl(from, info.download.sd, 'fb.mp4', '    *⺀ FACEBOOK MP4 ⺀* 🥷🏻‼️\n\n*○ Título:*  ' + `${info.title}` +'',id)
 })
+            break
+case 'fbk':
+                if (!isRegistered) return await bocchi.reply(from, eng.notRegistered(), id)
+                if (!isUrl(url) && !url.includes('facebook.com')) return await bocchi.reply(from, eng.wrongFormat(), id)
+                await bocchi.reply(from, eng.wait(), id)
+                downloader.fbk(url)
+                    .then(async (res) => {
+                        if (res.status === 'error') {
+                            await bocchi.reply(from, res.pesan, id)
+                        } else {
+                            await bocchi.sendFileFromUrl(from, res.result.url, 'video.mp4', '*「 FACEBOOK Video」*', id)
+                            console.log('Success sending Facebook video!')
+                        }
+                    })
+                    .catch(async (err) => {
+                        console.error(err)
+                        await bocchi.reply(from, 'Error!', id)
+                    })
             break
             
             case 'nofacebook':
@@ -693,29 +689,26 @@ bocchi.sendFileFromUrl(from, info.download.sd, 'fb.mp4', '    *⺀ FACEBOOK MP4 
                     await bocchi.reply(from, 'Error!', id)
                 }
             break
-            case 'tiktoknowm': // by: VideFrelan
-            case 'tktnowm':
-                if (!isRegistered) return await bocchi.reply(from, eng.notRegistered(), id)
-                if (!isUrl(url) && !url.includes('tiktok.com')) return await bocchi.reply(from, eng.wrongFormat(), id)
+            case 'ttnowm':
+            if (!isRegistered) return await bocchi.reply(from, eng.notRegistered(), id)
+                if (!q) return await bocchi.reply(from, eng.wrongFormat(), id)
                 if (limit.isLimit(sender.id, _limit, limitCount, isPremium, isOwner)) return await bocchi.reply(from, eng.limit(), id)
                 limit.addLimit(sender.id, _limit, isPremium, isOwner)
                 await bocchi.reply(from, eng.wait(), id)
-                downloader.tikNoWm(url)
-                    .then(async ({ result }) => {
-                        const responses = await fetch(result.link);
-                        const buffer = await responses.buffer();
-                        fs.writeFileSync(`./temp/${sender.id}_TikTokNoWm.mp4`, buffer)
-                        await bocchi.sendFile(from, `./temp/${sender.id}_TikTokNoWm.mp4`, `${sender.id}_TikTokNoWm.mp4`, '', id)
-                        console.log('Success sending TikTok video with no WM!')
-                        fs.unlinkSync(`./temp/${sender.id}_TikTokNoWm.mp4`)
-                    })
-                    .catch(async (err) => {
-                        console.error(err)
-                        await bocchi.reply(from, 'Error!', id)
-                    })
-            break
+		const rayynahmawaddah = body.slice(8)
+		tiktoknowm.noWm(rayynahmawaddah)
+		.then((result) => {
+			bocchi.sendFileFromUrl(from, `${result.thumbnail}`, `${result.infoname}.jpg`,`Name: ${result.infoname}\nPublikasi : ${result.published}\nHastag: ${result.hastag}\n\nVideo sedang kirim`, id)
+			bocchi.sendFileFromUrl(from, `${result.video}`, `${result.infoname}.mp4`, ``, id)
+		})
+		break
+
 case 'tiktok':
-                if (args.length == 0) return bocchi.reply(from, `Ayuda: *${prefix}tiktok [linkTiktok]*`, id)
+                if (!isRegistered) return await bocchi.reply(from, eng.notRegistered(), id)
+       if (!isGroupMsg) return bocchi.reply(from, 'Comando solo para grupos!', id)
+		   if (limit.isLimit(sender.id, _limit, limitCount, isPremium, isOwner)) return await bocchi.reply(from, eng.limit(), id)
+                limit.addLimit(sender.id, _limit, isPremium, isOwner)
+                if (args.length == 0) return bocchi.reply(from, ` *${prefix}tiktok [linkTiktok]*`, id)
                 await bocchi.reply(from, eng.wait(), id)
 		downloader.nowm2(args)
 		.then(async(res) => {
@@ -724,7 +717,7 @@ case 'tiktok':
 		fs.writeFile('./media/tiktok.mp4', buffxuxa)
 		bocchi.sendFile(from, './media/tiktok.mp4', '', '', id)
                     .catch(() => {
-                        bocchi.reply(from, 'Error njing', id)
+                        bocchi.reply(from, 'Error', id)
                     })
 		})
 		.catch((err) => {
@@ -3516,33 +3509,45 @@ case 'circular':
                 }
             break
             
+            case 'gif':
             case 'stickergif':
-        case 'gifsticker':
-        case 'gif':
-		
-            if (isMedia && type === 'video' || mimetype === 'image/gif' || isQuotedVideo || isQuotedGif || isQuotedMsg) {
-                await bocchi.reply(from, 'Por favor espera un momento~', id)
-                try {
-                	var tipo =mimetype
-                    const encryptMedia = isQuotedGif || isQuotedVideo ? quotedMsg : message
-                    if (encryptMedia.clientUrl === undefined){
-                    	encryptMedia.clientUrl = quotedMsg.deprecatedMms3Url
-                        tipo = quotedMsg.mimetype
-                        }
-
-                    const mediaData = await decryptMedia(encryptMedia, uaOverride)
-                    const gifSticker = `data:${tipo};base64,${mediaData.toString('base64')}`
-                    await bocchi.sendMp4AsSticker(from, gifSticker, { fps: 10, startTime: '00:00:00.0', endTime : '00:00:05.0', loop: 0 })
-		    await bocchi.reply(from, 'Ok Listo~', id)
-                } catch (err) {
-                    console.error(err)
-                    await bocchi.reply(from, 'Lo siento, tengo algunos errores al hacer tu stiker.', id)
+            case 'stikergif':
+                if (!isRegistered) return await bocchi.reply(from, eng.notRegistered(), id)
+                if (!isGroupMsg) return bocchi.reply(from, 'Comando solo para grupos!', id)
+                if (isMedia && type === 'video' || mimetype === 'image/gif') {
+                    await bocchi.reply(from, eng.wait(), id)
+                    try {
+                        const mediaData = await decryptMedia(message, uaOverride)
+                        const videoBase64 = `data:${mimetype};base64,${mediaData.toString('base64')}`
+                        await bocchi.sendMp4AsSticker(from, videoBase64, { keepScale: true, fps: 10, startTime: `00:00:00.0`, endTime : `00:00:10.0`, loop: 0 }, { author: '@Orumaito', pack: 'Creado por WaifuBot' })
+                        
+                            .then(async () => {
+                                console.log(`Sticker processed for ${processTime(t, moment())} seconds`)
+                                await bocchi.sendText(from, eng.ok())
+                            })
+                    } catch (err) {
+                        console.error(err)
+                        await bocchi.reply(from, eng.videoLimit(), id)
+                    }
+                } else if (isQuotedGif || isQuotedVideo) {
+                    await bocchi.reply(from, eng.wait(), id)
+                    try {
+                        const mediaData = await decryptMedia(quotedMsg, uaOverride)
+                        const videoBase64 = `data:${quotedMsg.mimetype};base64,${mediaData.toString('base64')}`
+                        await bocchi.sendMp4AsSticker(from, videoBase64, { keepScale: true, fps: 10, startTime: `00:00:00.0`, endTime : `00:00:10.0`, loop: 0 }, { author: 'CodeError', pack: 'Creado por CodeBot' })
+                        
+                            .then(async () => {
+                                console.log(`Sticker processed for ${processTime(t, moment())} seconds`)
+                                await bocchi.sendText(from, eng.ok())
+                            })
+                    } catch (err) {
+                        console.error(err)
+                        await bocchi.reply(from, eng.videoLimit(), id)
+                    }
+                } else {
+                    await bocchi.reply(from, eng.wrongFormat(), id)
                 }
-            } else {
-                await bocchi.reply(from, 'Esto solo se puede usar con videos y gifs.', id)
-            }
             break
-            
             
             case 'ttg':
                 if (!isRegistered) return await bocchi.reply(from, eng.notRegistered(), id)
@@ -4618,7 +4623,8 @@ case 'vip':
             break	
 		
 		 case 'bcgroup':
-            if (!isOwner) return await bocchi.reply(from, eng.ownerOnly(), id)
+            if (isVip | isOwner){
+}else{return bocchi.reply(from, 'Solo Disponible para Owner y Usuarios Vip!', id)}
             let msgi = body.slice(9)
             const chatg = await bocchi.getAllGroups()
             for (let idg of chatg) {
@@ -4662,7 +4668,8 @@ case 'vip':
                 await bocchi.sendFile(from, ses, 'session.png', eng.doneOwner())
             break
             case 'ban':
-                if (!isOwner) return await bocchi.reply(from, eng.ownerOnly(), id)
+          if (isVip | isOwner){
+}else{return bocchi.reply(from, 'Solo Disponible para Owner y Usuarios Vip!', id)}
                 if (ar[0] === 'add') {
                     if (mentionedJidList.length !== 0) {
                         for (let benet of mentionedJidList) {
@@ -5566,12 +5573,16 @@ case 'musica':
                     }
                 console.log('Video Enviado Exitosamente.')
                 break
-	
-            default:
-                if (isCmd) {
-                    await bocchi.reply(from, eng.cmdNotFound(command), id)
-                }
-            break
+	case 'respaldo':
+                    if (!isRegistered) return await bocchi.reply(from, eng.notRegistered(), id)
+       if (!isGroupMsg) return bocchi.reply(from, 'Comando solo para grupos!', id)
+       if (!isPremium) return await bocchi.reply(from, eng.notPremium(), id)
+                    await bocchi.reply(from, eng.wait(), id)
+                    var respaldox = '/root/archive.zip'
+                    const zip = require('zip-a-folder')
+                    await zip.zip('/root/BocchiBot/database', '/root/archive.zip')
+                    await bocchi.sendFile(from, respaldox, 'respaldo.zip', id)
+                     break
         }
     } catch (err) {
         console.error(color('[ERROR]', 'red'), err)
