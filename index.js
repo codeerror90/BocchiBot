@@ -69,67 +69,67 @@ const start = (bocchi = new Client()) => {
         console.log(color('[BLOCK]', 'red'), color(`${callData.peerJid} has been blocked.`, 'yellow'))
     })
 
-    bocchi.onGlobalParticipantsChanged(async (event) => {
-        const _welcome = JSON.parse(fs.readFileSync('./database/group/welcome.json'))
-        const isWelcome = _welcome.includes(event.chat)
-        const gcChat = await bocchi.getChatById(event.chat)
-        const pcChat = await bocchi.getContact(event.who)
-        let { pushname, verifiedName, formattedName } = pcChat
+bocchi.onGlobalParticipantsChanged(async (event) => {
+const _welcome = JSON.parse(fs.readFileSync('./database/group/welcome.json'))
+const anti = JSON.parse(fs.readFileSync('./database/bot/banned.json'))
+const isWelcome = _welcome.includes(event.chat)
+const isAnti = anti.includes(event.who)
+const gcChat = await bocchi.getChatById(event.chat)
+const pcChat = await bocchi.getContact(event.who)
+let { pushname, verifiedName, formattedName } = pcChat
         pushname = pushname || verifiedName || formattedName
-        const { name, groupMetadata } = gcChat
+const { name, groupMetadata } = gcChat
         const botNumbers = await bocchi.getHostNumber() + '@c.us'
-        try {
-            if (event.action === 'add' && event.who !== botNumbers && isWelcome) {
-                const pic = await bocchi.getProfilePicFromServer(event.who)
-                if (pic === undefined) {
-                    var picx = 'https://i.ibb.co/Tq7d7TZ/age-hananta-495-photo.png'
-                } else {
-                    picx = pic
-                }
-                const welcomer = await new canvas.Welcome()
-                    .setUsername(pushname)
+try {
+if (event.action == 'add') {
+if (isAnti && botNumbers) {
+await bocchi.sendText(event.chat, `Lo siento pero te ha sido prohibido entrar a este grupo.🤷`)
+await bocchi.removeParticipant(event.chat, event.who)
+await bocchi.contactBlock(event.who) // Evita ser travado por putinhos
+console.log(color('[BLACKLIST]', 'red'), color(`${pushname} - (${event.who.replace('@c.us', '')}) foi banido do ${name} por ter sido colocado na blacklist...`, 'yellow'))
+} else if (isWelcome && botNumbers) {
+var profile = await bocchi.getProfilePicFromServer(event.who)
+if (profile == '' || profile == undefined) profile = 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTQcODjk7AcA4wb_9OLzoeAdpGwmkJqOYxEBA&usqp=CAU'
+const welcomer = await new canvas.Welcome()
+.setUsername(pushname)
                     .setDiscriminator(event.who.substring(6, 10))
                     .setMemberCount(groupMetadata.participants.length)
                     .setGuildName(name)
-                    .setAvatar(picx)
+                    .setAvatar(profile)
                     .setColor('border', '#00100C')
                     .setColor('username-box', '#00100C')
                     .setColor('discriminator-box', '#00100C')
                     .setColor('message-box', '#00100C')
                     .setColor('title', '#00FFFF')
-                    .setBackground('https://www.photohdx.com/images/2016/05/red-blurry-background.jpg')
-                    .toAttachment()
-                const base64 = `data:image/png;base64,${welcomer.toBuffer().toString('base64')}`
-                await bocchi.sendFile(event.chat, base64, 'welcome.png', `Hola @${event.who.replace('@c.us','')} \n\nY bienvenido a ${name} \n\nQueremos que te diviertas y obviamente sigas nuestras reglas.!\n\n*Permitenos conocerte y presentate con Tu nombre, Foto, Edad y de donde eres* \n\nSi es necesario, llame a un administrador o escriba $menu.`)
-            } else if (event.action === 'remove' && event.who !== botNumbers && isWelcome) {
-                const pic = await bocchi.getProfilePicFromServer(event.who)
-                if (pic === undefined) {
-                    var picxs = 'https://i.ibb.co/Tq7d7TZ/age-hananta-495-photo.png'
-                } else {
-                    picxs = pic
-                }
-                const bye = await new canvas.Goodbye()
-                    .setUsername(pushname)
-                    .setDiscriminator(event.who.substring(6, 10))
-                    .setMemberCount(groupMetadata.participants.length)
-                    .setGuildName(name)
-                    .setAvatar(picxs)
-                    .setColor('border', '#00100C')
-                    .setColor('username-box', '#00100C')
-                    .setColor('discriminator-box', '#00100C')
-                    .setColor('message-box', '#00100C')
-                    .setColor('title', '#00FFFF')
-                    .setBackground('https://www.photohdx.com/images/2016/05/red-blurry-background.jpg')
-                    .toAttachment()
-                const base64 = `data:image/png;base64,${bye.toBuffer().toString('base64')}`
-                await bocchi.sendFile(event.chat, base64, 'welcome.png', `Bye ${pushname}, ve con diosito , te extrañaremos, o quizas no ☺️~`)
-            }
-        } catch (err) {
-            console.error(err)
-        }
-    })
+.setBackground('https://images.wallpaperscraft.com/image/landscape_art_road_127350_1280x720.jpg')
+.toAttachment()
+const base64 = `data:image/png;base64,${welcomer.toBuffer().toString('base64')}`
+await bocchi.sendFile(event.chat, base64, 'welcome.png', `Hola @${event.who.replace('@c.us','')} \n\nY bienvenido a ${name} \n\nQueremos que te diviertas y obviamente sigas nuestras reglas.!\n\n*Permitenos conocerte y presentate con Tu nombre, Foto, Edad y de donde eres* \n\nSi es necesario, llame a un administrador o escriba $menu.`)
+console.log(color('[INGRESO]', 'red'), color(`${pushname} - (${event.who.replace('@c.us', '')}) ingreso al grupo ${name}...`, 'yellow'))
 }
-
+} else if (event.action == 'remove' && isWelcome && botNumbers) {
+var profile = await bocchi.getProfilePicFromServer(event.who)
+if (profile == '' || profile == undefined) profile = 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTQcODjk7AcA4wb_9OLzoeAdpGwmkJqOYxEBA&usqp=CAU'
+const bye = await new canvas.Goodbye()
+.setUsername(pushname)
+                    .setDiscriminator(event.who.substring(6, 10))
+                    .setMemberCount(groupMetadata.participants.length)
+                    .setGuildName(name)
+                    .setAvatar(profile)
+                    .setColor('border', '#00100C')
+                    .setColor('username-box', '#00100C')
+                    .setColor('discriminator-box', '#00100C')
+                    .setColor('message-box', '#00100C')
+                    .setColor('title', '#00FFFF')
+.setBackground('https://images.wallpaperscraft.com/image/landscape_art_road_127350_1280x720.jpg')
+.toAttachment()
+const base64 = `data:image/png;base64,${bye.toBuffer().toString('base64')}`
+await bocchi.sendFile(event.chat, base64, 'welcome.png', `Bye ${pushname}, ve con diosito , te extrañaremos, o quizas no ☺️~`)
+console.log(color('[SALIO/BAN]', 'red'), color(`${pushname} - (${event.who.replace('@c.us', '')}) salio o fue baniadodel grupo ${name}...`, 'yellow'))
+}
+} catch (err) { console.log(err) }
+        })
+}
 create(options(start))
     .then((bocchi) => start(bocchi))
     .catch((err) => console.error(err))
